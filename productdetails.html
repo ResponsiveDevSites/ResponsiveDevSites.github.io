@@ -100,7 +100,7 @@
                     <button class="mobile-menu-toggler mr-2" type="button">
                         <i class="icon-menu"></i>
                     </button>
-                    <a href="index-2.html" class="logo">
+                    <a href="index.html" class="logo">
                         <h3 class="text-white">Company</h3>
                     </a>
                 </div><!-- End .header-left -->
@@ -322,10 +322,17 @@
         </div><!-- End .container -->
         </div><!-- End .footer-middle -->
 
-        <div class="container">
+       <div class="container">
             <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
-                <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
-                <p class="footer-copyright py-3 pr-4 mb-0">v 1.7</p>
+                <div class="col-xs 6">
+                    <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
+                </div>
+                <div class="col-xs 6 text-right">
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.8</p>
+                    <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
+                    <div id="userAgent" class="collapse">
+                    </div>
+                </div>
             </div><!-- End .footer-bottom -->
         </div><!-- End .container -->
     </footer>

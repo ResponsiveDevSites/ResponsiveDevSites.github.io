@@ -65,14 +65,6 @@ $(document).ready(function () {
         });
     });
 
-    $('.RAM').on('ifClicked', function (event) {
-        $('.RAM').iCheck('uncheck');
-        $(this).iCheck('check');
-    });
-    $('.Thickness').on('ifClicked', function (event) {
-        $('.Thickness').iCheck('uncheck');
-        $(this).iCheck('check');
-    });
     $('#colorFilterOptions li').on('click', function (event) {
         $('#colorFilterOptions li').not(this).removeClass('active');
         $(this).addClass('active');
@@ -140,22 +132,22 @@ function getProductVariantsAjax() {
 /** Home page scripts**/
 
 function loadMenuCategories(categories) {
-    let catPart1 = "<li><a href='products.html'>All Categories</a></li>";
-    let catPart2 = '';
-    let partition = Math.round((categories.length / 2));
+    var catPart1 = "<li><a href='products.html'>All Categories</a></li>";
+    var catPart2 = '';
+    var partition = Math.round((categories.length / 2));
 
-    for (let i = 0; i < partition; i++) {
+    for (var i = 0; i < partition; i++) {
         catPart1 += "<li><a href='products.html?category=" + categories[i] + "'>" + categories[i] + "</a></li>";
     }
-    for (let j = partition; j < categories.length; j++) {
+    for (var j = partition; j < categories.length; j++) {
         catPart2 += "<li><a href='products.html?category=" + categories[j] + "'>" + categories[j] + "</a></li>";
     }
     $('#catPart1').html(catPart1);
     $('#catPart2').html(catPart2);
 }
 function loadSearchCategories(categories) {
-    let ddlOptions = "<option value=''>All Categories</option>";
-    for (let i = 0; i < categories.length; i++) {
+    var ddlOptions = "<option value=''>All Categories</option>";
+    for (var i = 0; i < categories.length; i++) {
         ddlOptions += "<option value=''>" + categories[i] + "</option>";
     }
     $('#searchCat').html(ddlOptions);
@@ -164,17 +156,17 @@ function loadSearchCategories(categories) {
 /** Product page scripts**/
 
 function loadMobileViewMenuCat(categories) {
-    let mobileViewMenuCat = '';
-    for (let i = 0; i < categories.length; i++) {
-        let encodedURL = encodeURIComponent(categories[i]);
+    var mobileViewMenuCat = '';
+    for (var i = 0; i < categories.length; i++) {
+        var encodedURL = encodeURIComponent(categories[i]);
         mobileViewMenuCat += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
         $('#mobileViewMenuCat').html(mobileViewMenuCat);
     }
 }
 function loadProductsSideBarCategories(categories) {
-    let sidebarCat = "<li><a href='products.html'>All Categories</a></li>";
-    for (let i = 0; i < categories.length; i++) {
-        let encodedURL = encodeURIComponent(categories[i]);
+    var sidebarCat = "<li><a href='products.html'>All Categories</a></li>";
+    for (var i = 0; i < categories.length; i++) {
+        var encodedURL = encodeURIComponent(categories[i]);
         sidebarCat += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
     }
     $('#sidebarCat').html(sidebarCat);
@@ -189,18 +181,18 @@ function loadProducts(products) {
             return (obj[0] === locationValue)
         });
     }
-    let productBlock = '';
-    for (let i = 0; i < products.length; i++) {
+    var productBlock = '';
+    for (var i = 0; i < products.length; i++) {
         productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img src="ProductImages/' + products[i][3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + products[i][1] + '\')" title="Quick View">Quick View</a></figure><div class="product-details"><div class="category-wrap"><div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div></div><h3 class="product-title"><a onclick="navigateToProductDetails("' + products[i][1] + '")" href="javascript:">' + products[i][2] + '</a></h3></div></div></div>';
 
     }
     $('#productBlock').html(productBlock);
 }
 function loadFeaturedProducts(products) {
-    let featuredProductBlock = '';
-    for (let i = 0; i < 8; i++) {
-        let product = products[Math.floor(Math.random() * products.length)];
-        featuredProductBlock += '<div class="product-default inner-quickview inner-icon"><figure><a href="productdetails.html?ProductID=' + products[1] + '"><img src="ProductImages/' + product[3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + product[1] + '\')"  title="Quick View">Quick View</a> </figure> <div class="product-details"> <div class="category-wrap"> <div class="category-list"> <a href="javascript:" class="product-category">' + product[0] + '</a> </div> </div> <h3 class="product-title"> <a href="productdetails.html">' + product[2] + '</a> </h3>  </div></div>';
+    var featuredProductBlock = '';
+    for (var i = 0; i < 8; i++) {
+        var product = products[Math.floor(Math.random() * products.length)];
+        featuredProductBlock += '<div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + product[1] + '\')\" href="javascript:"><img src="ProductImages/' + product[3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + product[1] + '\')"  title="Quick View">Quick View</a> </figure> <div class="product-details"> <div class="category-wrap"> <div class="category-list"> <a href="javascript:" class="product-category">' + product[0] + '</a> </div> </div> <h3 class="product-title"> <a href="productdetails.html">' + product[2] + '</a> </h3>  </div></div>';
     }
 
     $('#featuredProductBlock').html(featuredProductBlock);
@@ -233,7 +225,7 @@ function loadFeaturedProducts(products) {
 }
 
 function quickView(productID) {
-    let product = productResult.filter(function (obj) {
+    var product = productResult.filter(function (obj) {
         return (obj[1] === productID)
     });
 
@@ -249,32 +241,33 @@ function navigateToProductDetails(productID) {
 }
 function loadProductDetails() {
 
-    let productID = localStorage.getItem("selectedProductID");
+    var productID = localStorage.getItem("selectedProductID");
 
     if (productID != null) {
         $('#hdnProductID').val(productID);
-        let product = productResult.filter(function (obj) {
+        var product = productResult.filter(function (obj) {
             return (obj[1] === productID)
         });
-        let productDetails = productVariantsResult.filter(function (obj) {
+        var productDetails = productVariantsResult.filter(function (obj) {
             return (obj[0] === productID)
         });
         $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3]);
         $('#productDetailProductName').html(product[0][2]);
         $('#productDetailProductDescription').html(product[0][4]);
 
-        let colorBlock = '';
-        let thicknessBlock = '';
-        let ramCapacityBlock = '';
+        var colorBlock = '';
+        var thicknessBlock = '';
+        var ramCapacityBlock = '';
+
         productDetails.filter(function (obj) {
             if (obj[3] == "Color") {
                 colorBlock += '<li data-val="' + obj[2] + '"><div style="padding:2px;"><a href="javascript:" title="' + obj[4] + '" style="background-color:' + obj[2] + '"></a></div></li>';
             }
             if (obj[3] == "Thickness") {
-                thicknessBlock += '<div class="custom-control custom-checkbox"><input type="checkbox"  class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
+                thicknessBlock += '<div class="custom-control custom-checkbox"><input type="radio" name="' + obj[3] + '"  class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
             }
             if (obj[3] == "RAM") {
-                ramCapacityBlock += '<div class="custom-control custom-checkbox"><input type="checkbox" class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
+                ramCapacityBlock += '<div class="custom-control custom-checkbox"><input type="radio"  name="' + obj[3] + '" class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
             }
         });
 
@@ -296,11 +289,11 @@ function addToCart(finalize) {
     //if (finalize == 'true') {
     //    localStorage.setItem("cart", '');
     //}
-    let selectedColor = null;
-    let thickness = null;
-    let RAM = null;
-    let quantity = $('#txtQty').val();
-    let productID = $('#hdnProductID').val();
+    var selectedColor = null;
+    var thickness = null;
+    var RAM = null;
+    var quantity = $('#txtQty').val();
+    var productID = $('#hdnProductID').val();
 
     selectedColor = $('#colorFilterOptions .active').attr('data-val');
     $(".Thickness").each(function () {
@@ -315,7 +308,7 @@ function addToCart(finalize) {
         }
     });
 
-    let cartObj = [];
+    var cartObj = [];
 
     if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '') {
         cartObj = JSON.parse(localStorage.getItem("cart"));
@@ -353,35 +346,41 @@ function addToCart(finalize) {
 }
 
 function loadReviewCart() {
-    let cartObj = [];
+    var cartObj = [];
 
     if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '') {
         cartObj = JSON.parse(localStorage.getItem("cart"));
 
 
-        let cartItemBlock = '';
-        for (let i = 0; i < cartObj.length; i++) {
+        var cartItemBlock = '';
+        for (var i = 0; i < cartObj.length; i++) {
 
-            let product = productResult.filter(function (obj) {
+            var product = productResult.filter(function (obj) {
                 return (obj[1] == cartObj[i].ProductID);
             });
-            let productThickness = productVariantsResult.filter(function (obj) {
+            var productThickness = productVariantsResult.filter(function (obj) {
                 return (obj[2] == cartObj[i].Thickness);
             });
-            let productRam = productVariantsResult.filter(function (obj) {
+            var productRam = productVariantsResult.filter(function (obj) {
                 return (obj[2] == cartObj[i].RAM);
             });
             cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list"> <li><a href="javascript;">Color: <div style="background-color: ' + cartObj[i].Color + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px;"></div></a> </li> <li><a href="#">Thickness: <span class="">' + productThickness[0][4] + '</span></a></li> <li><a href="#">RAM: <span class="">' + productRam[0][4] + '</span></a></li> </ul>  </div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td>  </tr>';
         }
         $('#reviewCart').html(cartItemBlock);
     }
-	else{
-		$('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
-	}
+    else {
+        $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
+    }
 
 }
 function clearCart() {
     localStorage.setItem("cart", '');
-	$('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
+    $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
     //window.location.href = "products.html";
+}
+function getUserAgent() {
+    var txt = navigator.userAgent;
+    txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
+    txt += "<br>Browser Online: " + navigator.onLine;
+    $('#userAgent').html(txt);
 }
