@@ -58,6 +58,11 @@ $(document).ready(function () {
         $('#colorFilterOptions li').not(this).removeClass('active');
         $(this).addClass('active');
     });
+	
+	 $('input').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+         radioClass: 'iradio_flat'
+    });
 });
 
 function getCategoriesAjax() {
