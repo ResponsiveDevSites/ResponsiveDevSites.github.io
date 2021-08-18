@@ -61,8 +61,7 @@ function getCategoriesAjax() {
             categoryResult = data.values.slice(1); //removed first row. it contains column title
             localStorage.setItem("categoryResult", JSON.stringify(categoryResult));
             loadMenuCategories(categoryResult);
-            loadSearchCategories(categoryResult);
-            loadProductsSideBarCategories(categoryResult);
+            loadSearchCategories(categoryResult);           
             loadMobileViewMenuCat(categoryResult);
         }
     });
