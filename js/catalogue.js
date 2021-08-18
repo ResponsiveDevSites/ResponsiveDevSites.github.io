@@ -65,6 +65,14 @@ $(document).ready(function () {
         });
     });
 
+    $('.RAM').on('ifClicked', function (event) {
+        $('.RAM').iCheck('uncheck');
+        $(this).iCheck('check');
+    });
+    $('.Thickness').on('ifClicked', function (event) {
+        $('.Thickness').iCheck('uncheck');
+        $(this).iCheck('check');
+    });
     $('#colorFilterOptions li').on('click', function (event) {
         $('#colorFilterOptions li').not(this).removeClass('active');
         $(this).addClass('active');
@@ -192,7 +200,7 @@ function loadFeaturedProducts(products) {
     var featuredProductBlock = '';
     for (var i = 0; i < 8; i++) {
         var product = products[Math.floor(Math.random() * products.length)];
-        featuredProductBlock += '<div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + product[1] + '\')\" href="javascript:"><img src="ProductImages/' + product[3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + product[1] + '\')"  title="Quick View">Quick View</a> </figure> <div class="product-details"> <div class="category-wrap"> <div class="category-list"> <a href="javascript:" class="product-category">' + product[0] + '</a> </div> </div> <h3 class="product-title"> <a href="productdetails.html">' + product[2] + '</a> </h3>  </div></div>';
+        featuredProductBlock += '<div class="product-default inner-quickview inner-icon"><figure><a href="productdetails.html?ProductID=' + products[1] + '"><img src="ProductImages/' + product[3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + product[1] + '\')"  title="Quick View">Quick View</a> </figure> <div class="product-details"> <div class="category-wrap"> <div class="category-list"> <a href="javascript:" class="product-category">' + product[0] + '</a> </div> </div> <h3 class="product-title"> <a href="productdetails.html">' + product[2] + '</a> </h3>  </div></div>';
     }
 
     $('#featuredProductBlock').html(featuredProductBlock);
@@ -258,16 +266,15 @@ function loadProductDetails() {
         var colorBlock = '';
         var thicknessBlock = '';
         var ramCapacityBlock = '';
-
         productDetails.filter(function (obj) {
             if (obj[3] == "Color") {
                 colorBlock += '<li data-val="' + obj[2] + '"><div style="padding:2px;"><a href="javascript:" title="' + obj[4] + '" style="background-color:' + obj[2] + '"></a></div></li>';
             }
             if (obj[3] == "Thickness") {
-                thicknessBlock += '<div class="custom-control custom-checkbox"><input type="radio" name="' + obj[3] + '"  class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
+                thicknessBlock += '<div class="custom-control custom-checkbox"><input type="checkbox"  class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
             }
             if (obj[3] == "RAM") {
-                ramCapacityBlock += '<div class="custom-control custom-checkbox"><input type="radio"  name="' + obj[3] + '" class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
+                ramCapacityBlock += '<div class="custom-control custom-checkbox"><input type="checkbox" class="' + obj[3] + '" id="' + obj[3] + "_" + obj[2] + '" value="' + obj[2] + '"><label style="margin-left: 5px;" for="' + obj[3] + "_" + obj[2] + '">' + obj[4] + '</label> </div>';
             }
         });
 
@@ -368,19 +375,13 @@ function loadReviewCart() {
         }
         $('#reviewCart').html(cartItemBlock);
     }
-    else {
-        $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
-    }
+	else{
+		$('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
+	}
 
 }
 function clearCart() {
     localStorage.setItem("cart", '');
-    $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
+	$('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
     //window.location.href = "products.html";
-}
-function getUserAgent() {
-    var txt = navigator.userAgent;
-    txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
-    txt += "<br>Browser Online: " + navigator.onLine;
-    $('#userAgent').html(txt);
 }
