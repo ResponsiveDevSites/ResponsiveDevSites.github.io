@@ -138,7 +138,7 @@ function loadProductsSideBarCategories(categories) {
 function loadProducts(products) {
 
     var locationValue = (new URL(location.href)).searchParams.get('category')
-    debugger;
+    
     if (locationValue != null) {
 
         products = products.filter(function (obj) {

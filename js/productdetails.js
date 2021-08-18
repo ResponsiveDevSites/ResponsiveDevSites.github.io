@@ -148,7 +148,7 @@ function loadProductDetails() {
         var productDetails = productVariantsResult.filter(function (obj) {
             return (obj[0] === productID)
         });
-        debugger;
+         
         $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3]);
         $('#productDetailProductName').html(product[0][2]);
         $('#productDetailProductDescription').html(product[0][4]);

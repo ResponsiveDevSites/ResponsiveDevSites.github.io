@@ -147,19 +147,22 @@ function loadReviewCart() {
             });
             cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list">@@VariantOptions</div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td>  </tr>';
 
-            var variantList = $.map(cartObj[i], function (value, key) {
+            var variantList = $.map(cartObj[0], function (value, key) {
                 return [[key, value]];
             });
             variantList = variantList.slice(2);
             var variantBlock = '';
             for (var j = 0; j < variantList.length; j++) {
+
                 if (variantList[j][0] == "Color") {
                     variantBlock += '<li><a href="javascript;">Color: <div style="background-color: ' + variantList[j][1] + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
                 }
                 else {
+
                     var currentVariant = productVariantsResult.filter(function (obj) {
                         return (obj[2] == variantList[j][1]);
                     });
+                    
                     variantBlock += '<li><a href="#">' + variantList[j][0] + ': <span class="">' + currentVariant[0][4] + '</span></a></li>';
                 }
             }
