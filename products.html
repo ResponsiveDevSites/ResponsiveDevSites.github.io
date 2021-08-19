@@ -38,6 +38,15 @@
             max-width: 100% !important;
             height: auto !important;
         }
+        .dropdown-arrow:after {
+            content: none;
+            border: 0;
+            margin: -5px 2px 0 11px;
+            font-size: 15px;
+            font-family: porto;
+            width: auto;
+            height: auto;
+        }
     </style>
 
 </head>
@@ -97,6 +106,12 @@
                     <div class="header-contact d-none d-lg-flex pl-4 ml-3 mr-xl-5 pr-4">
                         <img alt="phone" src="assets/images/phone.png" width="30" height="30" class="pb-1">
                         <h6>Call us now<a href="tel:#" class="font1">+91 97 690 06 388</a></h6>
+                    </div>
+					 <div class="dropdown cart-dropdown">
+                        <a href="review.html" class="dropdown-toggle dropdown-arrow">
+                            <i class="icon-shopping-cart"></i>
+                            <span class="cart-count badge-circle" id="cartItemCount">0</span>
+                        </a>
                     </div>
                 </div><!-- End .header-right -->
             </div><!-- End .container -->
@@ -278,7 +293,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.9</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.10</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>

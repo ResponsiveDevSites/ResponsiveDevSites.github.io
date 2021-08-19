@@ -50,7 +50,7 @@ $(document).ready(function () {
     else {
         loadReviewCart();
     }
-
+	updateCartCount();
 });
 
 function getCategoriesAjax() {
@@ -155,7 +155,7 @@ function loadReviewCart() {
             for (var j = 0; j < variantList.length; j++) {
 
                 if (variantList[j][0] == "Color") {
-                    variantBlock += '<li><a href="javascript;">Color: <div style="background-color: ' + variantList[j][1] + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
+                    variantBlock += '<li><a href="javascript:">Color: <div style="background-color: ' + variantList[j][1] + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
                 }
                 else {
 
@@ -163,7 +163,7 @@ function loadReviewCart() {
                         return (obj[2] == variantList[j][1]);
                     });
                     
-                    variantBlock += '<li><a href="#">' + variantList[j][0] + ': <span class="">' + currentVariant[0][4] + '</span></a></li>';
+                    variantBlock += '<li><a href="javascript:">' + variantList[j][0] + ': <span class="">' + currentVariant[0][4] + '</span></a></li>';
                 }
             }
             cartItemBlock = cartItemBlock.replace("@@VariantOptions", variantBlock);
@@ -179,11 +179,20 @@ function loadReviewCart() {
 function clearCart() {
     localStorage.setItem("cart", '');
     $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
-    //window.location.href = "products.html";
+    updateCartCount();
 }
 function getUserAgent() {
     var txt = navigator.userAgent;
     txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
     txt += "<br>Browser Online: " + navigator.onLine;
     $('#userAgent').html(txt);
+}
+function updateCartCount() {
+    if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != "") {
+        var cartObj = JSON.parse(localStorage.getItem("cart"));
+        $('#cartItemCount').html(cartObj.length);
+    }
+    else {
+        $('#cartItemCount').html('0');
+    }
 }

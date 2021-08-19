@@ -57,7 +57,7 @@ $(document).ready(function () {
             $(this).toggle($(this).find('.product-title a').text().toLowerCase().indexOf(value) > -1)
         });
     });
-
+	updateCartCount();
 });
 
 function getCategoriesAjax() {
@@ -175,4 +175,13 @@ function getUserAgent() {
     txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
     txt += "<br>Browser Online: " + navigator.onLine;
     $('#userAgent').html(txt);
+}
+function updateCartCount() {
+    if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != "") {
+        var cartObj = JSON.parse(localStorage.getItem("cart"));
+        $('#cartItemCount').html(cartObj.length);
+    }
+    else {
+        $('#cartItemCount').html('0');
+    }
 }

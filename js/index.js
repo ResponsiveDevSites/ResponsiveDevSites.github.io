@@ -29,11 +29,10 @@ var categoryResult = null;
 var productResult = null;
 
 $(document).ready(function () {
-    //alert("Document Ready!");
-    console.log("document dot ready for my code");
+
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
-    
+
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
     }
@@ -48,6 +47,7 @@ $(document).ready(function () {
     else {
         loadFeaturedProducts(productResult);
     }
+    updateCartCount();
 });
 
 
@@ -62,7 +62,7 @@ function getCategoriesAjax() {
             categoryResult = data.values.slice(1); //removed first row. it contains column title
             localStorage.setItem("categoryResult", JSON.stringify(categoryResult));
             loadMenuCategories(categoryResult);
-            loadSearchCategories(categoryResult);           
+            loadSearchCategories(categoryResult);
             loadMobileViewMenuCat(categoryResult);
         }
     });
@@ -167,4 +167,13 @@ function getUserAgent() {
     txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
     txt += "<br>Browser Online: " + navigator.onLine;
     $('#userAgent').html(txt);
+}
+function updateCartCount() {
+    if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != "") {
+        var cartObj = JSON.parse(localStorage.getItem("cart"));
+        $('#cartItemCount').html(cartObj.length);
+    }
+    else {
+        $('#cartItemCount').html('0');
+    }
 }
