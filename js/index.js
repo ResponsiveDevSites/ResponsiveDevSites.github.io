@@ -29,10 +29,10 @@ var categoryResult = null;
 var productResult = null;
 
 $(document).ready(function () {
-
+    alert("Document Ready!");
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
-    alert("Document Ready!");
+    
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
     }
