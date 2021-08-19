@@ -32,7 +32,7 @@ $(document).ready(function () {
 
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
-
+    alert("Document Ready!");
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
     }
