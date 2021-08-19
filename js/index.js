@@ -29,7 +29,8 @@ var categoryResult = null;
 var productResult = null;
 
 $(document).ready(function () {
-    alert("Document Ready!");
+    //alert("Document Ready!");
+    console.log("document dot ready for my code");
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
     
