@@ -147,7 +147,7 @@ function loadReviewCart() {
             });
             cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list">@@VariantOptions</div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td>  </tr>';
 
-            var variantList = $.map(cartObj[0], function (value, key) {
+            var variantList = $.map(cartObj[i], function (value, key) {
                 return [[key, value]];
             });
             variantList = variantList.slice(2);
