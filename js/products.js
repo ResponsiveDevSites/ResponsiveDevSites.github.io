@@ -137,7 +137,7 @@ function loadProductsSideBarCategories(categories) {
 }
 function loadProducts(products) {
 
-    var locationValue = (new URL(location.href)).searchParams.get('category')
+    //var locationValue = (new URL(location.href)).searchParams.get('category')
     
     if (locationValue != null) {
 
