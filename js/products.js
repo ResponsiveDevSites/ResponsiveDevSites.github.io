@@ -136,8 +136,8 @@ function loadProductsSideBarCategories(categories) {
     $('#sidebarCat').html(sidebarCat);
 }
 function loadProducts(products) {
-
-    //var locationValue = (new URL(location.href)).searchParams.get('category')
+    var locationValue = null;
+    //locationValue = (new URL(location.href)).searchParams.get('category')
     
     if (locationValue != null) {
 
