@@ -57,7 +57,7 @@ $(document).ready(function () {
             $(this).toggle($(this).find('.product-title a').text().toLowerCase().indexOf(value) > -1)
         });
     });
-	updateCartCount();
+    updateCartCount();
 });
 
 function getCategoriesAjax() {
@@ -97,17 +97,15 @@ function refreshData() {
     getProductsAjax();
 }
 function loadMenuCategories(categories) {
-    var catPart1 = "<li><a href='products.html'>All Categories</a></li>";
+    var catPart1 = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     var catPart2 = '';
     var partition = Math.round((categories.length / 2));
 
     for (var i = 0; i < partition; i++) {
-        var encodedURL = encodeURIComponent(categories[i]);
-        catPart1 += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
+        catPart1 += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')"> ' + categories[i] + '</a ></li >';
     }
     for (var j = partition; j < categories.length; j++) {
-        var encodedURL = encodeURIComponent(categories[j]);
-        catPart2 += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[j] + "</a></li>";
+        catPart2 += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[j] + '\')"> ' + categories[j] + '</a ></li >';
     }
     $('#catPart1').html(catPart1);
     $('#catPart2').html(catPart2);
@@ -122,29 +120,29 @@ function loadSearchCategories(categories) {
 function loadMobileViewMenuCat(categories) {
     var mobileViewMenuCat = '';
     for (var i = 0; i < categories.length; i++) {
-        var encodedURL = encodeURIComponent(categories[i]);
-        mobileViewMenuCat += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
+        mobileViewMenuCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
         $('#mobileViewMenuCat').html(mobileViewMenuCat);
     }
 }
 function loadProductsSideBarCategories(categories) {
-    var sidebarCat = "<li><a href='products.html'>All Categories</a></li>";
+    var sidebarCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     for (var i = 0; i < categories.length; i++) {
-        var encodedURL = encodeURIComponent(categories[i]);
-        sidebarCat += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
+        sidebarCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
     }
     $('#sidebarCat').html(sidebarCat);
 }
 function loadProducts(products) {
-    var locationValue = null;
-    //locationValue = (new URL(location.href)).searchParams.get('category')
-    
-    if (locationValue != null) {
+
+    var selectedCategory = null;
+
+    selectedCategory = localStorage.getItem("selectedCategory");
+    if (selectedCategory != null && selectedCategory != '' && selectedCategory != "All") {
 
         products = products.filter(function (obj) {
-            return (obj[0] === locationValue)
+            return (obj[0] === selectedCategory)
         });
     }
+
     var productBlock = '';
     for (var i = 0; i < products.length; i++) {
         productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img src="ProductImages/' + products[i][3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + products[i][1] + '\')" title="Quick View">Quick View</a></figure><div class="product-details"><div class="category-wrap"><div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div></div><h3 class="product-title"><a onclick="navigateToProductDetails("' + products[i][1] + '")" href="javascript:">' + products[i][2] + '</a></h3></div></div></div>';
@@ -184,4 +182,9 @@ function updateCartCount() {
     else {
         $('#cartItemCount').html('0');
     }
+}
+
+function navigateToProducts(Category) {
+    localStorage.setItem("selectedCategory", Category);
+    window.location.href = "products.html";
 }

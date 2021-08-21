@@ -83,17 +83,15 @@ function getProductsAjax() {
 
 }
 function loadMenuCategories(categories) {
-    var catPart1 = "<li><a href='products.html'>All Categories</a></li>";
+    var catPart1 = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     var catPart2 = '';
     var partition = Math.round((categories.length / 2));
 
     for (var i = 0; i < partition; i++) {
-        var encodedURL = encodeURIComponent(categories[i]);
-        catPart1 += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
+        catPart1 += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')"> ' + categories[i] + '</a ></li >';
     }
     for (var j = partition; j < categories.length; j++) {
-        var encodedURL = encodeURIComponent(categories[j]);
-        catPart2 += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[j] + "</a></li>";
+        catPart2 += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[j] + '\')"> ' + categories[j] + '</a ></li >';
     }
     $('#catPart1').html(catPart1);
     $('#catPart2').html(catPart2);
@@ -109,7 +107,7 @@ function loadMobileViewMenuCat(categories) {
     var mobileViewMenuCat = '';
     for (var i = 0; i < categories.length; i++) {
         var encodedURL = encodeURIComponent(categories[i]);
-        mobileViewMenuCat += "<li><a href='products.html?category=" + encodedURL + "'>" + categories[i] + "</a></li>";
+        mobileViewMenuCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
         $('#mobileViewMenuCat').html(mobileViewMenuCat);
     }
 }
@@ -162,6 +160,8 @@ function navigateToProductDetails(productID) {
     localStorage.setItem("selectedProductID", productID);
     window.location.href = "productdetails.html";
 }
+
+
 function getUserAgent() {
     var txt = navigator.userAgent;
     txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
@@ -176,4 +176,9 @@ function updateCartCount() {
     else {
         $('#cartItemCount').html('0');
     }
+}
+
+function navigateToProducts(Category) {
+    localStorage.setItem("selectedCategory", Category);
+    window.location.href = "products.html";
 }
