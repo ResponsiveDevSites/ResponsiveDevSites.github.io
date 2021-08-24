@@ -202,12 +202,18 @@ function addRow() {
     var variantTableTrBlock = '<tr>';
 
     variantCollection.filter(function (obj) {
-        var variantTableTdBlock = '<td data-variant="' + obj + '"><select type="dropdown" style="height:34px"><option value="0">Select one</option>';
+
+        var variantTableTdBlock = '';
+        if (obj == "Color") {
+            variantTableTdBlock = '<td data-variant="' + obj + '"><select class="select2" type="dropdown" style="height:34px; min-width:130px;"><option value="">Select one</option>';
+        } else {
+            variantTableTdBlock = '<td data-variant="' + obj + '"><select class="" type="dropdown" style="height:34px"><option value="">Select one</option>';
+        }
 
         productDetails.filter(function (obj2) {
             if (obj == obj2[3]) {
                 if (obj == "Color") {
-                    variantTableTdBlock += '<option class="fa" style="color:' + obj2[2] + '" value="' + obj2[2] + '"><span>&#xf111;</span> ' + obj2[4] + '</span></option>';
+                    variantTableTdBlock += '<option value="' + obj2[2] + '">' + obj2[4] + '</option>';
                 }
                 else {
                     variantTableTdBlock += '<option value="' + obj2[2] + '">' + obj2[4] + '</option>';
@@ -218,7 +224,7 @@ function addRow() {
         variantTableTrBlock += variantTableTdBlock;
     });
 
-    variantTableTrBlock += '<td data-variant="quantity"><input type="text" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><input onclick="removeRow(this)" type="button" class="removeRow" value="X"/> </td></tr>';
+    variantTableTrBlock += '<td data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><input onclick="removeRow(this)" type="button" class="removeRow" value="X"/> </td></tr>';
 
     $('#tblVariantsBody').append(variantTableTrBlock);
 
@@ -229,6 +235,8 @@ function addRow() {
     else {
         $($('.removeRow')[0]).removeAttr('disabled')
     }
+    responsiveTable();
+    initalizeSelect2();
 }
 
 function removeRow(current) {
@@ -242,7 +250,7 @@ function addToCart(finalize) {
     var isValid = true;
     var cartObj = [];
 
-   
+
     $("#tblVariantsBody tr").each(function (index, object) {
 
         var cartItem = {};
@@ -260,8 +268,7 @@ function addToCart(finalize) {
                 }
             }
             else if ($(obj).attr('data-variant') != null) {
-
-                if ($(obj).find("select").val() != null && $(obj).attr('data-variant') != "") {
+                if ($(obj).find("select").val() != null && $(obj).find("select").val() != "" && $(obj).attr('data-variant') != "") {
                     cartItemVariant[$(obj).attr('data-variant')] = $(obj).find("select").val();
                 }
                 else {
@@ -279,7 +286,19 @@ function addToCart(finalize) {
     if (isValid) {
 
         if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '') {
-            cartObj = cartObj.concat(JSON.parse(localStorage.getItem("cart")));
+            var existingCart = JSON.parse(localStorage.getItem("cart"));
+
+            $(cartObj).each(function (index) {
+                $(existingCart).each(function (existingIndex) {
+                    if (existingCart[existingIndex].ProductID == cartObj[index].ProductID) {
+                        existingCart.splice(existingIndex, 1);
+                        return false;  
+                    }
+                });
+
+            });
+
+            cartObj = cartObj.concat(existingCart);
         }
 
         localStorage.setItem("cart", JSON.stringify(cartObj));
@@ -316,3 +335,66 @@ function navigateToProducts(Category) {
     localStorage.setItem("selectedCategory", Category);
     window.location.href = "products.html";
 }
+
+function responsiveTable() {
+
+    // inspired by http://jsfiddle.net/arunpjohny/564Lxosz/1/
+    $('.table-responsive-stack').each(function (i) {
+        var id = $(this).attr('id');
+        //alert(id);
+        $(this).find("th").each(function (i) {
+            $('#' + id + ' td:nth-child(' + (i + 1) + ')').find('.table-responsive-stack-thead').remove();
+            $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
+            $('.table-responsive-stack-thead').hide();
+
+        });
+    });
+
+    $('.table-responsive-stack').each(function () {
+        var thCount = $(this).find("th").length;
+        var rowGrow = 100 / thCount + '%';
+        //console.log(rowGrow);
+        $(this).find("th, td").css('flex-basis', rowGrow);
+    });
+
+    function flexTable() {
+        if ($(window).width() < 768) {
+
+            $(".table-responsive-stack").each(function (i) {
+                $(this).find(".table-responsive-stack-thead").show();
+                $(this).find('thead').hide();
+            });
+
+        } else {
+            $(".table-responsive-stack").each(function (i) {
+                $(this).find(".table-responsive-stack-thead").hide();
+                $(this).find('thead').show();
+            });
+        }
+        // flextable   
+    }
+
+    flexTable();
+
+    window.onresize = function (event) {
+        flexTable();
+    };
+    // document ready  
+
+}
+function initalizeSelect2() {
+    /*  $('.select2').select2();*/
+    $('.select2').select2({
+        templateResult: formatState
+    });
+}
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    var baseUrl = "/user/pages/images/flags";
+    var $state = $(
+        '<span><i class="icon-circle" style="color:' + state.element.value.toLowerCase() + '" /> ' + state.text + '</span>'
+    );
+    return $state;
+};

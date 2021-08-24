@@ -154,7 +154,7 @@ function loadReviewCart() {
                 var currentVariant = productVariantsResult.filter(function (obj) {
                     return (obj[2] == variantList[j][1] && obj[0] == cartObj[i].ProductID);
                 });
-                debugger;
+                
                 if (variantList[j][0] == "Color") {
                      
                     variantBlock += '<li><a href="javascript:">Color:  <span class="">' + currentVariant[0][4] + '</span> | <div style="background-color: ' + variantList[j][1] + '; height: 17px; width: 17px; border-radius:17px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
