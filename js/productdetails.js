@@ -134,9 +134,15 @@ function loadMobileViewMenuCat(categories) {
 }
 function loadProductDetails() {
 
-    var productID = localStorage.getItem("selectedProductID");
+    var productID = "";
+    if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {
+        productID = sessionStorage.getItem("cartProductToEdit");
+    } else {
+        productID = localStorage.getItem("selectedProductID");
+    }
 
     if (productID != null) {
+
         $('#hdnProductID').val(productID);
 
         var product = productResult.filter(function (obj) {
@@ -150,10 +156,6 @@ function loadProductDetails() {
         $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3]);
         $('#productDetailProductName').html(product[0][2]);
         $('#productDetailProductDescription').html(product[0][4]);
-
-        var colorBlock = '';
-
-        var variantsArray = [];
 
         for (var i = 0; i < productDetails.length; i++) {
             var isUniqueVariant = true;
@@ -171,17 +173,50 @@ function loadProductDetails() {
         var variantTableHeaderBlock = '<tr>';
 
         variantCollection.filter(function (obj) {
-            variantTableHeaderBlock += '<th>' + obj + '</th>';
+            variantTableHeaderBlock += '<th class="text-center">' + obj + '</th>';
         });
-        variantTableHeaderBlock += '<th style="width:115px">Quantity</th><th>Action</th></tr>';
+
+        variantTableHeaderBlock += '<th class="text-center" style="width:115px">Quantity</th><th class="text-center">Delete</th></tr>';
         $('#tblVariantsHeader').html(variantTableHeaderBlock);
-        addRow();
+
+        if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {
+
+            var productIDtoEdit = sessionStorage.getItem("cartProductToEdit");
+            var existingCart = JSON.parse(localStorage.getItem("cart"));
+            existingCart = existingCart.filter(function (obj) {
+                return (obj.ProductID === productIDtoEdit)
+            });
+
+            for (var i = 0; i < existingCart.length; i++) {
+                addRow();
+                var existingCartItem = existingCart[i];
+
+                var trow = $('#tblVariantsBody tr')[i];
+                $(trow).find('td').each(function (ind, obj) {
+
+                    if ($(obj).attr('data-variant') == "quantity") {
+                        $(obj).find("input").val(existingCartItem.Quantity)
+                    }
+                    else if ($(obj).attr('data-variant') != null) {
+                        var existingCartItemVariant = existingCartItem.cartItemVariant[$(obj).attr('data-variant')];
+                        $(obj).find('select').val(existingCartItemVariant);
+                    }
+                });
+                responsiveTable();
+                initalizeSelect2();
+            }
+        }
+        else {
+            addRow();
+        }
+        sessionStorage.setItem("cartProductToEdit", '');
     }
 }
 
 function addRow() {
 
-    var productID = localStorage.getItem("selectedProductID");
+    var productID = $('#hdnProductID').val();
+
     var productDetails = productVariantsResult.filter(function (obj) {
         return (obj[0] === productID)
     });
@@ -205,9 +240,9 @@ function addRow() {
 
         var variantTableTdBlock = '';
         if (obj == "Color") {
-            variantTableTdBlock = '<td data-variant="' + obj + '"><select class="select2" type="dropdown" style="height:34px; min-width:130px;"><option value="">Select one</option>';
+            variantTableTdBlock = '<td class="text-center" data-variant="' + obj + '"><select class="custom-ddl-color" type="dropdown" style="height:34px; min-width:130px;"><option value="">Select one</option>';
         } else {
-            variantTableTdBlock = '<td data-variant="' + obj + '"><select class="" type="dropdown" style="height:34px"><option value="">Select one</option>';
+            variantTableTdBlock = '<td class="text-center" data-variant="' + obj + '"><select class="custom-ddl" type="dropdown" style="height:34px"><option value="">Select one</option>';
         }
 
         productDetails.filter(function (obj2) {
@@ -224,16 +259,16 @@ function addRow() {
         variantTableTrBlock += variantTableTdBlock;
     });
 
-    variantTableTrBlock += '<td data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><input onclick="removeRow(this)" type="button" class="removeRow" value="X"/> </td></tr>';
+    variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><button onclick="removeRow(this)" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
 
     $('#tblVariantsBody').append(variantTableTrBlock);
 
 
     if ($('#tblVariantsBody tr').length == 1) {
-        $('.removeRow').attr('disabled', 'disabled');
+        $('.removeRow').addClass('hide');
     }
     else {
-        $($('.removeRow')[0]).removeAttr('disabled')
+        $($('.removeRow')[0]).removeClass('hide');
     }
     responsiveTable();
     initalizeSelect2();
@@ -242,7 +277,7 @@ function addRow() {
 function removeRow(current) {
     $(current).closest('tr').remove();
     if ($('#tblVariantsBody tr').length == 1) {
-        $('.removeRow').attr('disabled', 'disabled');
+        $($('.removeRow')[0]).addClass('hide');
     }
 }
 
@@ -286,13 +321,15 @@ function addToCart(finalize) {
     if (isValid) {
 
         if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '') {
-            var existingCart = JSON.parse(localStorage.getItem("cart"));
 
+            var existingCart = JSON.parse(localStorage.getItem("cart"));
+            var existingCartUpdated = [];
             $(cartObj).each(function (index) {
                 $(existingCart).each(function (existingIndex) {
-                    if (existingCart[existingIndex].ProductID == cartObj[index].ProductID) {
-                        existingCart.splice(existingIndex, 1);
-                        return false;  
+                    if (existingCart[existingIndex].ProductID != cartObj[index].ProductID) {
+                        existingCart = existingCart.splice(existingIndex, 1);
+                        existingCartUpdated.push(existingCart[existingIndex]);
+                        return false;
                     }
                 });
 
@@ -383,10 +420,10 @@ function responsiveTable() {
 
 }
 function initalizeSelect2() {
-    /*  $('.select2').select2();*/
-    $('.select2').select2({
+    $('.custom-ddl-color').select2({
         templateResult: formatState
     });
+    $('.custom-ddl').select2();
 }
 function formatState(state) {
     if (!state.id) {
@@ -394,7 +431,7 @@ function formatState(state) {
     }
     var baseUrl = "/user/pages/images/flags";
     var $state = $(
-        '<span><i class="icon-circle" style="color:' + state.element.value.toLowerCase() + '" /> ' + state.text + '</span>'
+        '<span><i class="fa fa-square" style="font-size:20px; color:' + state.element.value.toLowerCase() + '" /> ' + state.text + '</span>'
     );
     return $state;
 };

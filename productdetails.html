@@ -128,6 +128,12 @@
             .select2-container--default .select2-selection--single .select2-selection__arrow {
                 top: 5px;
             }
+
+        .btn-xs {
+            padding: 1px 13px;
+            font-size: 12px;
+            line-height: 2.5;
+        }
     </style>
 
 </head>
@@ -292,7 +298,9 @@
 
                                                     </div>
                                                     <div class="col-md-6 text-right">
-                                                        <input type="button" onclick="addRow()" value="Add" class="btn btn-info btn-sm" />
+                                                        <button type="button" onclick="addRow()" class="btn btn-info btn-sm">
+                                                            <i class="fa fa-plus"></i> ADD
+                                                        </button>
                                                     </div>
 
                                                 </div>
@@ -307,14 +315,12 @@
 
                                                 <br />
                                                 <div class="row">
-                                                    <div class="col-md-6">
 
-                                                    </div>
-                                                    <div class="col-md-6 text-right">
+                                                    <div class="col-md-12 text-center">
                                                         <div class="btn-group">
                                                             <button type="button" onclick="addToCart()" class="btn col-xs-12 btn-dark add-cart icon-shopping-cart">Add to Cart</button>
                                                             <div class="btn-group">
-                                                                <button type="button" class="btn col-xs-12 btn-dark add-cart cart-btn" data-toggle="dropdown">
+                                                                <button type="button" class="btn col-sm-12 btn-dark add-cart cart-btn" data-toggle="dropdown">
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
                                                                     <li style="padding: 10px; min-width: 160px"><a class="icon-shopping-cart" onclick="addToCart('true')" style="color: black; font-size: 1.4rem; font-weight: 700; font-size: 14px;" href="javascript:">&nbsp;Add & Finalize</a></li>
@@ -419,7 +425,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.13</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.14</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>

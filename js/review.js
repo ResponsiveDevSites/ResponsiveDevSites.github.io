@@ -142,7 +142,7 @@ function loadReviewCart() {
             var product = productResult.filter(function (obj) {
                 return (obj[1] == cartObj[i].ProductID);
             });
-            cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list">@@VariantOptions</div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td>  </tr>';
+            cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list">@@VariantOptions</div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td><td style="vertical-align:bottom"><button onclick="editCart(\'' + product[0][1] + '\')" class="btn btn-xs btn-info" type="button"><i class="fa fa-edit"></i></button></td></tr>';
 
             var variantList = $.map(cartObj[i].cartItemVariant, function (value, key) {
                 return [[key, value]];
@@ -154,10 +154,10 @@ function loadReviewCart() {
                 var currentVariant = productVariantsResult.filter(function (obj) {
                     return (obj[2] == variantList[j][1] && obj[0] == cartObj[i].ProductID);
                 });
-                
+
                 if (variantList[j][0] == "Color") {
-                     
-                    variantBlock += '<li><a href="javascript:">Color:  <span class="">' + currentVariant[0][4] + '</span> | <div style="background-color: ' + variantList[j][1] + '; height: 17px; width: 17px; border-radius:17px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
+
+                    variantBlock += '<li><a href="javascript:">Color:  <span class="">' + currentVariant[0][4] + '</span> | <div style="background-color: ' + variantList[j][1] + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
                 }
                 else {
                     variantBlock += '<li><a href="javascript:">' + variantList[j][0] + ': <span class="">' + currentVariant[0][4] + '</span></a></li>';
@@ -177,6 +177,16 @@ function clearCart() {
     localStorage.setItem("cart", '');
     $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
     updateCartCount();
+    $("#msg-container").removeClass('hide');
+    $("#msg").html('Cart cleared...')
+    window.setInterval(function () {
+        var timeLeft = $("#timeLeft").html();
+        if (eval(timeLeft) == 0) {
+            window.location.href = "products.html";
+        } else {
+            $("#timeLeft").html(eval(timeLeft) - eval(1));
+        }
+    }, 1000);
 }
 function getUserAgent() {
     var txt = navigator.userAgent;
@@ -197,4 +207,21 @@ function updateCartCount() {
 function navigateToProducts(Category) {
     localStorage.setItem("selectedCategory", Category);
     window.location.href = "products.html";
+}
+function submitOrder() {
+
+    $("#msg-container").removeClass('hide');
+    $("#msg").html('Submitted successfully...')
+    window.setInterval(function () {
+        var timeLeft = $("#timeLeft").html();
+        if (eval(timeLeft) == 0) {
+            window.location.href = "products.html";
+        } else {
+            $("#timeLeft").html(eval(timeLeft) - eval(1));
+        }
+    }, 1000);
+}
+function editCart(ProductID) {
+    sessionStorage.setItem('cartProductToEdit', ProductID);
+    window.location.href ="productdetails.html"
 }
