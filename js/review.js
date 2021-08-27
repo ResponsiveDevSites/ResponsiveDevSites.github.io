@@ -133,7 +133,6 @@ function loadMobileViewMenuCat(categories) {
 function loadReviewCart() {
     var cartObj = [];
 
-    debugger;
     if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '' && localStorage.getItem("cart") != "[]") {
         cartObj = JSON.parse(localStorage.getItem("cart"));
 
@@ -207,7 +206,7 @@ function updateCartCount() {
 }
 
 function navigateToProducts(Category) {
-    localStorage.setItem("selectedCategory", Category);
+    sessionStorage.setItem("selectedCategory", Category);
     window.location.href = "products.html";
 }
 function submitOrder() {

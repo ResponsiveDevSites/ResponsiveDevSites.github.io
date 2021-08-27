@@ -138,7 +138,7 @@ function loadProductDetails() {
     if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {
         productID = sessionStorage.getItem("cartProductToEdit");
     } else {
-        productID = localStorage.getItem("selectedProductID");
+        productID = sessionStorage.getItem("selectedProductID");
     }
 
     if (productID != null) {
@@ -420,7 +420,7 @@ function updateCartCount() {
 }
 
 function navigateToProducts(Category) {
-    localStorage.setItem("selectedCategory", Category);
+    sessionStorage.setItem("selectedCategory", Category);
     window.location.href = "products.html";
 }
 
