@@ -125,7 +125,7 @@ function loadSearchCategories(categories) {
     $('#searchCat').html(ddlOptions);
 }
 function loadMobileViewMenuCat(categories) {
-    var mobileViewMenuCat = '';
+    var mobileViewMenuCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     for (var i = 0; i < categories.length; i++) {
         var encodedURL = encodeURIComponent(categories[i]);
         mobileViewMenuCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
@@ -172,11 +172,20 @@ function loadProductDetails() {
 
         var variantTableHeaderBlock = '<tr>';
 
+
         variantCollection.filter(function (obj) {
             variantTableHeaderBlock += '<th class="text-center">' + obj + '</th>';
         });
 
-        variantTableHeaderBlock += '<th class="text-center" style="width:115px">Quantity</th><th class="text-center">Delete</th></tr>';
+        if (variantCollection.length > 0) {
+            variantTableHeaderBlock += '<th class="text-center" style="width:115px">Quantity</th><th class="text-center">Delete</th></tr>';
+        }
+        else {
+            variantTableHeaderBlock += '<th class="text-center" style="width:115px">Quantity</th></tr>';
+            $('#btnAddRow').addClass('hide');
+        }
+
+
         $('#tblVariantsHeader').html(variantTableHeaderBlock);
 
         if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {
@@ -259,7 +268,14 @@ function addRow() {
         variantTableTrBlock += variantTableTdBlock;
     });
 
-    variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><button onclick="removeRow(this)" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
+    if (variantCollection.length > 0) {
+        variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><button onclick="removeRow(this)" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
+    }
+    else {
+        variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td></tr>';
+
+    }
+
 
     $('#tblVariantsBody').append(variantTableTrBlock);
 
@@ -272,25 +288,37 @@ function addRow() {
     }
     responsiveTable();
     initalizeSelect2();
+
 }
 
 function removeRow(current) {
-    $(current).closest('tr').remove();
-    if ($('#tblVariantsBody tr').length == 1) {
-        $($('.removeRow')[0]).addClass('hide');
+    if (confirm("Are you sure?")) {
+        $(current).closest('tr').remove();
+        if ($('#tblVariantsBody tr').length == 1) {
+            $($('.removeRow')[0]).addClass('hide');
+        }
     }
 }
 
 function addToCart(finalize) {
     var isValid = true;
+    var isDuplicate = false;
     var cartObj = [];
-
 
     $("#tblVariantsBody tr").each(function (index, object) {
 
         var cartItem = {};
         var cartItemVariant = {};
         cartItem["ProductID"] = $('#hdnProductID').val();
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + '/' + mm + '/' + yyyy;
+        cartItem["CreatedDate"] = today;
+        cartItem["CartRowIndex"] = '';
+
         $(object).find('td').each(function (ind, obj) {
 
             if ($(obj).attr('data-variant') == "quantity") {
@@ -317,25 +345,42 @@ function addToCart(finalize) {
 
     });
 
+    var compareToIndex = 0;
+
+    cartObj.filter(function (obj) {
+
+        var compareWithIndex = 0;
+        cartObj.filter(function (obj2) {
+            if (compareToIndex != compareWithIndex) {
+                if (JSON.stringify(obj.cartItemVariant) == JSON.stringify(obj2.cartItemVariant)) {
+                    isDuplicate = true;
+                    isValid = false;
+
+                }
+            }
+
+            compareWithIndex = compareWithIndex + 1;
+        })
+        compareToIndex = compareToIndex + 1;
+    })
+
+
 
     if (isValid) {
 
         if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '') {
 
             var existingCart = JSON.parse(localStorage.getItem("cart"));
-            var existingCartUpdated = [];
-            $(cartObj).each(function (index) {
-                $(existingCart).each(function (existingIndex) {
-                    if (existingCart[existingIndex].ProductID != cartObj[index].ProductID) {
-                        existingCart = existingCart.splice(existingIndex, 1);
-                        existingCartUpdated.push(existingCart[existingIndex]);
-                        return false;
-                    }
-                });
 
+            existingCart = existingCart.filter(function (obj) {
+                return obj.ProductID != $('#hdnProductID').val();
             });
 
             cartObj = cartObj.concat(existingCart);
+        }
+
+        for (var i = 0; i < cartObj.length; i++) {
+            cartObj[i].CartRowIndex = i;
         }
 
         localStorage.setItem("cart", JSON.stringify(cartObj));
@@ -346,16 +391,22 @@ function addToCart(finalize) {
         $('#validationMsg').removeClass('alert alert-danger');
         $('#validationMsg').addClass('alert alert-success');
         $('#validationMsg').html('Item added..')
-        $('#validationMsg').fadeIn('fast').delay(2000);
-        $('#validationMsg').fadeOut('slow').delay(3000).hide(0);
     }
     else {
+
         $('#validationMsg').removeClass('alert alert-success');
         $('#validationMsg').addClass('alert alert-danger');
-        $('#validationMsg').html('Select all options..')
-        $('#validationMsg').fadeIn('fast').delay(2000);
-        $('#validationMsg').fadeOut('slow').delay(3000).hide(0);
+
+        if (isDuplicate) {
+            $('#validationMsg').html('Duplicate variants selected..')
+        }
+        else {
+            $('#validationMsg').html('Select all options..')
+        }
+
     }
+    $('#validationMsg').fadeIn('fast').delay(2000);
+    $('#validationMsg').fadeOut('slow').delay(3000).hide(0);
     updateCartCount();
 }
 function updateCartCount() {

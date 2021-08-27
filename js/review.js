@@ -123,7 +123,7 @@ function loadSearchCategories(categories) {
     $('#searchCat').html(ddlOptions);
 }
 function loadMobileViewMenuCat(categories) {
-    var mobileViewMenuCat = '';
+    var mobileViewMenuCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     for (var i = 0; i < categories.length; i++) {
         var encodedURL = encodeURIComponent(categories[i]);
         mobileViewMenuCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
@@ -133,7 +133,8 @@ function loadMobileViewMenuCat(categories) {
 function loadReviewCart() {
     var cartObj = [];
 
-    if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '') {
+    debugger;
+    if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '' && localStorage.getItem("cart") != "[]") {
         cartObj = JSON.parse(localStorage.getItem("cart"));
 
         var cartItemBlock = '';
@@ -142,7 +143,7 @@ function loadReviewCart() {
             var product = productResult.filter(function (obj) {
                 return (obj[1] == cartObj[i].ProductID);
             });
-            cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list">@@VariantOptions</div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td><td style="vertical-align:bottom"><button onclick="editCart(\'' + product[0][1] + '\')" class="btn btn-xs btn-info" type="button"><i class="fa fa-edit"></i></button></td></tr>';
+            cartItemBlock += '<tr><td class="product-col"><figure class="product-image-container"><a href="javascript:" class="product-image"> <img id="reviewProductImage" src="ProductImages/' + product[0][3] + '" alt="product"> <input type="hidden" id="reviewProductID" /> </a> </figure> <div class="widget widget-categories"> <h4 class="widget-title">' + product[0][2] + '</h4> <ul class="list">@@VariantOptions</div> </td>  <td class="price-col">Quanitity: <span class="">' + cartObj[i].Quantity + '</span></td><td style="vertical-align:bottom"><button onclick="editCart(\'' + product[0][1] + '\')" class="btn btn-xs-edit btn-info" type="button"><i class="fa fa-edit"></i></button><br/><button onclick="deleteCartRow(\'' + cartObj[i].CartRowIndex + '\')" class="btn btn-xs-delete btn-danger" type="button"><i class="fa fa-trash"></i></button></td></tr>';
 
             var variantList = $.map(cartObj[i].cartItemVariant, function (value, key) {
                 return [[key, value]];
@@ -163,6 +164,7 @@ function loadReviewCart() {
                     variantBlock += '<li><a href="javascript:">' + variantList[j][0] + ': <span class="">' + currentVariant[0][4] + '</span></a></li>';
                 }
             }
+            variantBlock += '<li><a href="javascript:">Created Date: <span class="">' + cartObj[i].CreatedDate + '</span></a></li>';
             cartItemBlock = cartItemBlock.replace("@@VariantOptions", variantBlock);
         }
 
@@ -223,5 +225,19 @@ function submitOrder() {
 }
 function editCart(ProductID) {
     sessionStorage.setItem('cartProductToEdit', ProductID);
-    window.location.href ="productdetails.html"
+    window.location.href = "productdetails.html"
+}
+function deleteCartRow(cartRowIndex) {
+
+    if (confirm("Are you sure?")) {
+
+        var cartObj = JSON.parse(localStorage.getItem("cart"));
+        cartObj = cartObj.filter(function (obj) {
+            return obj.CartRowIndex != cartRowIndex;
+        })
+        localStorage.setItem("cart", JSON.stringify(cartObj));
+        loadReviewCart();
+        updateCartCount();
+    }
+
 }
