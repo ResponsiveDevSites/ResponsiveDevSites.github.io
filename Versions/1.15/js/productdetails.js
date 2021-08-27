@@ -56,6 +56,7 @@ $(document).ready(function () {
 
     updateCartCount();
 
+
 });
 
 function getCategoriesAjax() {
@@ -173,14 +174,14 @@ function loadProductDetails() {
 
 
         variantCollection.filter(function (obj) {
-            variantTableHeaderBlock += '<th class="">' + obj + '</th>';
+            variantTableHeaderBlock += '<th class="text-center">' + obj + '</th>';
         });
 
         if (variantCollection.length > 0) {
-            variantTableHeaderBlock += '<th class="" style="width:115px">Quantity</th><th class="text-center">Delete</th></tr>';
+            variantTableHeaderBlock += '<th class="text-center" style="width:115px">Quantity</th><th class="text-center">Delete</th></tr>';
         }
         else {
-            variantTableHeaderBlock += '<th class="" style="width:115px">Quantity</th></tr>';
+            variantTableHeaderBlock += '<th class="text-center" style="width:115px">Quantity</th></tr>';
             $('#btnAddRow').addClass('hide');
         }
 
@@ -210,9 +211,8 @@ function loadProductDetails() {
                         $(obj).find('select').val(existingCartItemVariant);
                     }
                 });
-
-                initalizeSelect2();
                 responsiveTable();
+                initalizeSelect2();
             }
         }
         else {
@@ -249,9 +249,9 @@ function addRow() {
 
         var variantTableTdBlock = '';
         if (obj == "Color") {
-            variantTableTdBlock = '<td class="" data-variant="' + obj + '"><select class="custom-ddl-color" type="dropdown" style="height:34px"><option value="">Select one</option>';
+            variantTableTdBlock = '<td class="text-center" data-variant="' + obj + '"><select class="custom-ddl-color" type="dropdown" style="height:34px; min-width:130px;"><option value="">Select one</option>';
         } else {
-            variantTableTdBlock = '<td class="" data-variant="' + obj + '"><select class="custom-ddl" type="dropdown" style="height:34px;"><option value="">Select one</option>';
+            variantTableTdBlock = '<td class="text-center" data-variant="' + obj + '"><select class="custom-ddl" type="dropdown" style="height:34px"><option value="">Select one</option>';
         }
 
         productDetails.filter(function (obj2) {
@@ -269,14 +269,16 @@ function addRow() {
     });
 
     if (variantCollection.length > 0) {
-        variantTableTrBlock += '<td class="" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px;" placeholder="Quantity"></td><td class="text-center"><button onclick="removeRow(this)" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
+        variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td><td class="text-center"><button onclick="removeRow(this)" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
     }
     else {
-        variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px;" placeholder="Quantity"></td></tr>';
+        variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px; width:115px" placeholder="Quantity"></td></tr>';
 
     }
 
+
     $('#tblVariantsBody').append(variantTableTrBlock);
+
 
     if ($('#tblVariantsBody tr').length == 1) {
         $('.removeRow').addClass('hide');
@@ -284,8 +286,9 @@ function addRow() {
     else {
         $($('.removeRow')[0]).removeClass('hide');
     }
-    initalizeSelect2();
     responsiveTable();
+    initalizeSelect2();
+
 }
 
 function removeRow(current) {
@@ -429,9 +432,9 @@ function responsiveTable() {
         //alert(id);
         $(this).find("th").each(function (i) {
             $('#' + id + ' td:nth-child(' + (i + 1) + ')').find('.table-responsive-stack-thead').remove();
-            if ($(this).text() != "Delete") {
-                $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
-            }
+            $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
+            $('.table-responsive-stack-thead').hide();
+
         });
     });
 
@@ -449,17 +452,12 @@ function responsiveTable() {
                 $(this).find(".table-responsive-stack-thead").show();
                 $(this).find('thead').hide();
             });
-            $($('.table-responsive-stack').find('.select2')).each(function (ind, obj) { $(obj).css('width', '50%') })
-            $($('.table-responsive-stack').find('input[type=number]')).each(function (ind, obj) { $(obj).css('width', '50%') })
 
         } else {
             $(".table-responsive-stack").each(function (i) {
                 $(this).find(".table-responsive-stack-thead").hide();
                 $(this).find('thead').show();
             });
-
-            $($('.table-responsive-stack').find('.select2')).each(function (ind, obj) { $(obj).css('width', '100%') })
-            $($('.table-responsive-stack').find('input[type=number]')).each(function (ind, obj) { $(obj).css('width', '100%') })
         }
         // flextable   
     }
