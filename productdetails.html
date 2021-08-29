@@ -57,14 +57,27 @@
                 -webkit-box-direction: normal;
                 -ms-flex-direction: column;
                 flex-direction: column;
-                border-bottom: 3px solid #08C;
                 display: block;
             }
+
+                .table-responsive-stack tr .last-odd {
+                    border-bottom: 3px solid #08C;
+                }
             /*  IE9 FIX   */
-            .table-responsive-stack td {
+            /*  .table-responsive-stack td {
                 float: left\9;
                 width: 100%;
+            }*/
+            /*  IE9 FIX   */
+            .table-responsive-stack td {
+                float: left;
+                width: 50%;
             }
+
+                .table-responsive-stack td.last-odd {
+                    float: left;
+                    width: 100%;
+                }
         }
     </style>
 
@@ -133,6 +146,50 @@
             padding: 1px 13px;
             font-size: 12px;
             line-height: 2.5;
+        }
+        /* Extra small devices (phones, 600px and down) */
+        @media only screen and (max-width: 600px) {
+            .delete-modal-sm {
+                width: 100%;
+            }
+
+            #confirmDelete {
+                padding-right: 10% !important;
+                padding-left: 10% !important;
+            }
+        }
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+        @media only screen and (min-width: 600px) {
+            .delete-modal-sm {
+                width: 100%;
+            }
+
+            #confirmDelete {
+                padding-right: 10% !important;
+                padding-left: 10% !important;
+            }
+        }
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media only screen and (min-width: 768px) {
+            .delete-modal-sm {
+                width: 30%;
+            }
+        }
+
+        /* Large devices (laptops/desktops, 992px and up) */
+        @media only screen and (min-width: 992px) {
+            .delete-modal-sm {
+                width: 30%;
+            }
+        }
+
+        /* Extra large devices (large laptops and desktops, 1200px and up) */
+        @media only screen and (min-width: 1200px) {
+            .delete-modal-sm {
+                width: 30%;
+            }
         }
     </style>
 
@@ -425,7 +482,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.16</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.17</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>
@@ -459,33 +516,25 @@
         </div><!-- End .mobile-menu-wrapper -->
     </div><!-- End .mobile-menu-container -->
 
-    <div class="modal fade" id="quickView" role="dialog">
-        <div class="modal-dialog">
+    <div class="modal fade" id="confirmDelete" role="dialog" style="background-color:rgba(0,0,0,0.7)">
+        <div class="modal-dialog delete-modal-sm">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row row-sparse">
-                        <div class="col-lg-6">
-                            <div class="">
-                                <div class="product-item">
-                                    <img class="product-single-image" id="quickViewProductImage" />
+                        <div class="col-xs-12">
+                            <h6>Are you sure to delete?</h6>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-xs btn-danger" onclick="removeRow()">Delete</button>
                                 </div>
-                                <!-- End .product-single-carousel -->
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
+                                </div>
                             </div>
-
+                            <input type="hidden" id="hdnValueToDelete" />
                         </div><!-- End .product-single-gallery -->
-
-                        <div class="col-lg-6 product-single-details">
-                            <h1 class="product-title" id="quickViewProductName">Product Name</h1>
-                            <hr class="divider">
-                            <div class="product-desc">
-                                <p id="quickViewProductDescription"></p>
-                            </div><!-- End .product-desc -->
-                        </div><!-- End .product-single-details -->
                     </div><!-- End .row -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
 

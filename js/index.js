@@ -68,7 +68,7 @@ function getCategoriesAjax() {
     });
 }
 function getProductsAjax() {
-
+    debugger;
     $.ajax({
         type: "GET",
         url: readProductURL,

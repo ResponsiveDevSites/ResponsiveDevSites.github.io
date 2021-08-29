@@ -223,7 +223,7 @@ function loadProductDetails() {
 }
 
 function addRow() {
-
+    var rowIndex = $('#tblVariantsBody tr').length;
     var productID = $('#hdnProductID').val();
 
     var productDetails = productVariantsResult.filter(function (obj) {
@@ -269,7 +269,7 @@ function addRow() {
     });
 
     if (variantCollection.length > 0) {
-        variantTableTrBlock += '<td class="" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px;" placeholder="Quantity"></td><td class="text-center"><button onclick="removeRow(this)" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
+        variantTableTrBlock += '<td class="" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px;" placeholder="Quantity"></td><td class="text-center"><button data-rowindex="' + (rowIndex + 1) + '" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
     }
     else {
         variantTableTrBlock += '<td class="text-center" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px;" placeholder="Quantity"></td></tr>';
@@ -288,13 +288,19 @@ function addRow() {
     responsiveTable();
 }
 
-function removeRow(current) {
-    if (confirm("Are you sure?")) {
-        $(current).closest('tr').remove();
-        if ($('#tblVariantsBody tr').length == 1) {
-            $($('.removeRow')[0]).addClass('hide');
-        }
+$(document).on('click', '.removeRow', function () {
+    $('#hdnValueToDelete').val($(this).attr('data-rowindex'));
+    $('#confirmDelete').modal('show');
+});
+
+function removeRow() {
+    var valueToDelete = $('#hdnValueToDelete').val();
+    var current = $("#tblVariantsBody tr").find('[data-rowindex=' + valueToDelete + ']');
+    $(current).closest('tr').remove();
+    if ($('#tblVariantsBody tr').length == 1) {
+        $($('.removeRow')[0]).addClass('hide');
     }
+    $('#confirmDelete').modal('hide');
 }
 
 function addToCart(finalize) {
@@ -310,9 +316,11 @@ function addToCart(finalize) {
 
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        var mm = monthNames[today.getMonth()]; //January is 0!
         var yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
+        today = dd + '-' + mm + '-' + yyyy;
         cartItem["CreatedDate"] = today;
         cartItem["CartRowIndex"] = '';
 
@@ -427,12 +435,23 @@ function responsiveTable() {
     $('.table-responsive-stack').each(function (i) {
         var id = $(this).attr('id');
         //alert(id);
+        var totalHeaders = $(this).find("th").length;
         $(this).find("th").each(function (i) {
             $('#' + id + ' td:nth-child(' + (i + 1) + ')').find('.table-responsive-stack-thead').remove();
+            $('#' + id + ' td:nth-child(' + (i + 1) + ')').addClass((totalHeaders == (i + 1)) && i % 2 == 0 ? 'last-odd' : '');
+            //$('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span style="min-width: 35%; display:inline-block" class="table-responsive-stack-thead">' + $(this).text() + ':</span> ');
+            // $('.table-responsive-stack-thead').hide();
             if ($(this).text() != "Delete") {
                 $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
             }
         });
+
+        //$(this).find("th").each(function (i) {
+        //    $('#' + id + ' td:nth-child(' + (i + 1) + ')').find('.table-responsive-stack-thead').remove();
+        //    if ($(this).text() != "Delete") {
+        //        $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
+        //    }
+        //});
     });
 
     $('.table-responsive-stack').each(function () {
