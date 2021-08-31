@@ -140,13 +140,17 @@ function loadProductDetails() {
 
         productID = sessionStorage.getItem("selectedProductID");
 
-        var isItemExistInCart = JSON.parse(localStorage.getItem("cart"));
+        if (localStorage.getItem("cart") != "" && localStorage.getItem("cart") != null) {
 
-        isItemExistInCart = isItemExistInCart.filter(function (obj) {
-            return (obj.ProductID === productID);
-        });
-        if (isItemExistInCart.length > 0) {
-            sessionStorage.setItem("cartProductToEdit", productID);
+            var isItemExistInCart = JSON.parse(localStorage.getItem("cart"));
+            if (isItemExistInCart != null) {
+                isItemExistInCart = isItemExistInCart.filter(function (obj) {
+                    return (obj.ProductID === productID);
+                });
+            }
+            if (isItemExistInCart != null && isItemExistInCart.length > 0) {
+                sessionStorage.setItem("cartProductToEdit", productID);
+            }
         }
 
     }
