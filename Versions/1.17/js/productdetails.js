@@ -137,18 +137,7 @@ function loadProductDetails() {
     if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {
         productID = sessionStorage.getItem("cartProductToEdit");
     } else {
-
         productID = sessionStorage.getItem("selectedProductID");
-
-        var isItemExistInCart = JSON.parse(localStorage.getItem("cart"));
-
-        isItemExistInCart = isItemExistInCart.filter(function (obj) {
-            return (obj.ProductID === productID);
-        });
-        if (isItemExistInCart.length > 0) {
-            sessionStorage.setItem("cartProductToEdit", productID);
-        }
-
     }
 
     if (productID != null) {

@@ -25,69 +25,14 @@
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
+
     </script>
-    <style>
-        .table-responsive-stack tr {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-            flex-direction: row;
-        }
-
-
-        .table-responsive-stack td,
-        .table-responsive-stack th {
-            display: block;
-            /*
-        flex-grow | flex-shrink | flex-basis   */
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-        }
-
-        .table-responsive-stack .table-responsive-stack-thead {
-            font-weight: bold;
-        }
-
-        @media screen and (max-width: 768px) {
-            .table-responsive-stack tr {
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -ms-flex-direction: column;
-                flex-direction: column;
-                display: block;
-            }
-
-                .table-responsive-stack tr .last-odd {
-                    border-bottom: 3px solid #08C;
-                }
-            /*  IE9 FIX   */
-            /*  .table-responsive-stack td {
-                float: left\9;
-                width: 100%;
-            }*/
-            /*  IE9 FIX   */
-            .table-responsive-stack td {
-                float: left;
-                width: 50%;
-            }
-
-                .table-responsive-stack td.last-odd {
-                    float: left;
-                    width: 100%;
-                }
-        }
-    </style>
-
 
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="assets/css/style.min.css">
     <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         .img-responsive {
             display: block !important;
@@ -98,11 +43,6 @@
         .inline-list li {
             display: inline;
             padding: 0px 5px;
-        }
-
-        .custom-control {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
         }
 
         .cart-btn:after {
@@ -129,23 +69,27 @@
             height: auto;
         }
 
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: 34px;
-        }
-
-        .select2-container--default .select2-selection--single {
-            border-radius: 0px;
-            height: 34px;
-        }
-
-            .select2-container--default .select2-selection--single .select2-selection__arrow {
-                top: 5px;
-            }
-
         .btn-xs {
-            padding: 1px 13px;
-            font-size: 12px;
+            padding: 1px 10px;
+            font-size: 10px;
             line-height: 2.5;
+        }
+
+        .btn-xs-edit {
+            padding: 1px 10px;
+            font-size: 10px;
+            line-height: 2.5;
+        }
+
+        .btn-xs-delete {
+            padding: 1px 11px;
+            font-size: 10.5px;
+            line-height: 2.4;
+            margin-top: 10px;
+        }
+
+        .list li a {
+            padding: 0.5rem 0 .5rem 2rem !important;
         }
         /* Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
@@ -299,111 +243,42 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Product Details</li>
+                    <li class="breadcrumb-item active" aria-current="page">Review</li>
                 </ol>
             </nav>
 
             <div class="row">
-                <div class="col-lg-12 main-content">
-                    <div class="product-single-container product-single-default">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 product-single-gallery">
-                                <div class="product-slider-container">
-                                    <div class="">
-                                        <div class="product-item">
-                                            <img id="productDetailImage" class="img-responsive" />
-                                        </div>
-                                        <!-- End .product-single-carousel -->
-                                    </div>
-                                </div>
+                <div class="col-lg-8 main-content">
+                    <table class="table table-mini-cart">
+                        <tbody id="reviewCart">
+                            <tr><td>Loading...</td></tr>
+                        </tbody>
+                    </table>
 
-                            </div><!-- End .col-lg-7 -->
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart-summary">
+                        <div class="checkout-methods">
+                            <a href="javascript:" onclick="submitOrder()" class="btn btn-block btn-sm btn-primary">Submit</a>
+                        </div><!-- End .checkout-methods -->
+                        <br />
+                        <div class="checkout-methods">
+                            <a href="products.html" class="btn btn-block btn-sm btn-primary">Continue to Products</a>
+                        </div><!-- End .checkout-methods -->
+                        <br />
+                        <div>
+                            <a href="javascript:" onclick="clearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart</a>
+                        </div><!-- End .checkout-methods -->
+                        <br />
+                        <div>
+                            <div class="alert alert-success hide" id="msg-container">
+                                <span id="msg"></span> <br />Redirecting to products in <span id="timeLeft">5</span> ...
+                            </div>
+                        </div>
 
-                            <div class="col-lg-8 col-md-8">
-                                <div class="product-single-details">
-                                    <h1 class="product-title" id="productDetailProductName"> </h1>
-                                    <input type="hidden" id="hdnProductID" />
-                                    <hr class="short-divider">
+                    </div><!-- End .cart-summary -->
 
-                                    <div class="product-desc">
-                                        <p id="productDetailProductDescription"></p>
-                                    </div><!-- End .product-desc -->
-                                    <!--<hr class="divider" id="colorFilterDivider">-->
-                                    <div class="product-filters-container">
-                                        <!--<div class="product-single-filter" id="colorFilter">
-                                            <label>Colors:</label>
-                                            <ul class="config-swatch-list" id="colorFilterOptions">
-                                            </ul>
-                                        </div>-->
-                                        <!-- End .product-single-filter -->
-                                        <!--<hr class="divider">
-                                        <div id="otherVariants">
-
-                                        </div>
-
-                                        <hr class="divider">
-
-                                        <div class="product-single-filter">
-                                            <label>Quantity:</label>
-                                            <input type="number" id="txtQty" class="form-input" style="height:34px">
-                                        </div>-->
-                                        <hr class="divider">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-
-                                                    </div>
-                                                    <div class="col-md-6 text-right">
-                                                        <button type="button" onclick="addRow()" id="btnAddRow" class="btn btn-info btn-sm">
-                                                            <i class="fa fa-plus"></i> ADD
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                                <br />
-
-                                                <table id="tableOne" class="table table-bordered table-responsive-stack">
-                                                    <thead id="tblVariantsHeader">
-                                                    </thead>
-                                                    <tbody id="tblVariantsBody">
-                                                    </tbody>
-                                                </table>
-
-                                                <br />
-                                                <div class="row">
-
-                                                    <div class="col-md-12 text-center">
-                                                        <div class="btn-group">
-                                                            <button type="button" onclick="addToCart()" class="btn col-xs-12 btn-dark add-cart icon-shopping-cart">Save to Cart</button>
-                                                            <div class="btn-group">
-                                                                <button type="button" class="btn col-sm-12 btn-dark add-cart cart-btn" data-toggle="dropdown">
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu">
-                                                                    <li style="padding: 10px; min-width: 160px"><a class="icon-shopping-cart" onclick="addToCart('true')" style="color: black; font-size: 1.4rem; font-weight: 700; font-size: 14px;" href="javascript:">&nbsp;Add & Finalize</a></li>
-                                                                </ul>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <!-- End .product-action -->
-                                        <br />
-                                        <div id="validationMsg" style="display:none"> </div>
-
-                                    </div><!-- End .product-filters-container -->
-                                </div><!-- End .product-single-details -->
-                            </div><!-- End .col-lg-5 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .product-single-container -->
-
-                </div><!-- End .col-lg-9 -->
+                </div><!-- End .col-lg-4 -->
             </div>
 
         </div><!-- End .container -->
@@ -475,14 +350,13 @@
         </div><!-- End .row -->
         </div><!-- End .container -->
         </div><!-- End .footer-middle -->
-
         <div class="container">
             <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
                 <div class="col-xs 6">
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.18</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.17</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>
@@ -526,7 +400,7 @@
                             <h6>Are you sure to delete?</h6>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs btn-danger" onclick="removeRow()">Delete</button>
+                                    <button type="button" class="btn btn-xs btn-danger" onclick="deleteCartRow()">Delete</button>
                                 </div>
                                 <div class="col-xs-6">
                                     <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
@@ -548,7 +422,6 @@
     <script src="assets/js/plugins.min.js"></script>
     <!-- Main JS File -->
     <script src="assets/js/main.min.js"></script>
-    <script src="js/productdetails.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="js/review.js"></script>
 </body>
 </html>
