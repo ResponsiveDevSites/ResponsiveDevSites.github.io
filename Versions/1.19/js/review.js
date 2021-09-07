@@ -34,21 +34,12 @@ $(document).ready(function () {
     }
     updateCartCount();
 });
+ 
 function loadReviewCart() {
     var cartObj = [];
 
-    if (sessionStorage.getItem("showPreviousCart") == "1") {
-        if (localStorage.getItem("previousCart") != null && localStorage.getItem("previousCart") != '' && localStorage.getItem("previousCart") != "[]") {
-            cartObj = JSON.parse(localStorage.getItem("previousCart"));
-        }
-
-    }
-    else {
-        if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '' && localStorage.getItem("cart") != "[]") {
-            cartObj = JSON.parse(localStorage.getItem("cart"));
-        }
-    }
-    if (cartObj.length > 0) {
+    if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '' && localStorage.getItem("cart") != "[]") {
+        cartObj = JSON.parse(localStorage.getItem("cart"));
 
         var cartItemBlock = '';
         for (var i = 0; i < cartObj.length; i++) {
@@ -84,31 +75,17 @@ function loadReviewCart() {
 
         $('#reviewCart').html(cartItemBlock);
 
+
+
+
     }
     else {
-        if (sessionStorage.getItem("showPreviousCart") == "1") {
-            $('#reviewCart').html('<tr><td  colspan="3">No Previous Cart..</td></tr>');
-        }
-        else {
-            $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
-        }
-        $('#btnSubmitOrder').addClass('disabled');
-    }
-    if (sessionStorage.getItem("showPreviousCart") == "1") {
-        $('.btn-xs-delete').hide();
-        $('.btn-xs-edit').hide();
-        $('#activeBreadCrumb').text('Previous Cart');
-        $('#btnShowCurrentCart').removeClass('hide');
-        $('#btnShowPreviousCart').addClass('hide');
-
-        sessionStorage.setItem("showPreviousCart", "");
+        $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
     }
 
 }
 function clearCart() {
     localStorage.setItem("cart", '');
-    localStorage.setItem("previousCart", '');
-    $('#btnSubmitOrder').addClass('disabled');
     $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
     updateCartCount();
     $("#msg-container").removeClass('hide');
@@ -124,15 +101,11 @@ function clearCart() {
 }
 function submitOrder() {
 
-    var existingCart = JSON.parse(localStorage.getItem("cart"));
-    localStorage.setItem("previousCart", JSON.stringify(existingCart));
-
     $("#msg-container").removeClass('hide');
     $("#msg").html('Submitted successfully...')
     window.setInterval(function () {
         var timeLeft = $("#timeLeft").html();
         if (eval(timeLeft) == 0) {
-            localStorage.setItem("cart", '');
             window.location.href = "products.html";
         } else {
             $("#timeLeft").html(eval(timeLeft) - eval(1));
@@ -157,11 +130,4 @@ function deleteCartRow() {
     loadReviewCart();
     updateCartCount();
     $('#confirmDelete').modal('hide');
-}
-
-function switchCart(showPreviousCart) {
-    if (showPreviousCart) {
-        sessionStorage.setItem("showPreviousCart", "1");
-    }
-    window.location.href = "review.html";
 }

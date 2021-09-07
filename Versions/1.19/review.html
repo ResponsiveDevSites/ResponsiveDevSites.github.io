@@ -243,7 +243,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><span id="activeBreadCrumb">Review</span> </li>
+                    <li class="breadcrumb-item active" aria-current="page">Review</li>
                 </ol>
             </nav>
 
@@ -259,20 +259,15 @@
                 <div class="col-lg-4">
                     <div class="cart-summary">
                         <div class="checkout-methods">
-                            <a href="javascript:" onclick="submitOrder()" id="btnSubmitOrder" class="btn btn-block btn-sm btn-primary">Submit</a>
+                            <a href="javascript:" onclick="submitOrder()" class="btn btn-block btn-sm btn-primary">Submit</a>
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div class="checkout-methods">
-                            <a href="products.html" id="btnContinueToProducts" class="btn btn-block btn-sm btn-primary">Continue to Products</a>
+                            <a href="products.html" class="btn btn-block btn-sm btn-primary">Continue to Products</a>
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div>
-                            <a href="javascript:" id="btnShowCurrentCart" onclick="switchCart(false)" class="btn btn-sm btn-block btn-outline-secondary hide">Show Current Cart</a>
-                            <a href="javascript:" id="btnShowPreviousCart" onclick="switchCart(true)" class="btn btn-sm btn-block btn-outline-secondary">Show Previous Cart</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <a href="javascript:" id="btnClearCart" onclick="clearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart(s)</a>
+                            <a href="javascript:" onclick="clearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart</a>
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div>
@@ -361,7 +356,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.20</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.19</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>
