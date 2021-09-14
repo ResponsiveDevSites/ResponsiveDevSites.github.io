@@ -105,7 +105,11 @@ function loadReviewCart() {
     }
 
 }
+function confirmClearCart() {
+    $('#confirmClearCart').modal('show');
+}
 function clearCart() {
+    $('#confirmClearCart').modal('hide');
     localStorage.setItem("cart", '');
     localStorage.setItem("previousCart", '');
     $('#btnSubmitOrder').addClass('disabled');

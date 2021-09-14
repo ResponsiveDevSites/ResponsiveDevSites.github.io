@@ -129,6 +129,9 @@ function loadProductDetails() {
 
                 initalizeSelect2();
                 responsiveTable();
+                $('.custom-ddl-color').trigger({
+                    type: 'select2:select'
+                });
             }
         }
         else {
@@ -345,7 +348,13 @@ function responsiveTable() {
             //$('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span style="min-width: 35%; display:inline-block" class="table-responsive-stack-thead">' + $(this).text() + ':</span> ');
             // $('.table-responsive-stack-thead').hide();
             if ($(this).text() != "Delete") {
-                $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
+                if ($(this).text() == "Color") {
+                    $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 30%; display:inline-block">' + $(this).text() + ':</span> ');
+                }
+                else {
+                    $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
+                }
+
             }
         });
 
@@ -380,7 +389,14 @@ function responsiveTable() {
                 $(this).find('thead').show();
             });
 
-            $($('.table-responsive-stack').find('.select2')).each(function (ind, obj) { $(obj).css('width', '100%') })
+            $($('.table-responsive-stack').find('.select2')).each(function (ind, obj) {
+                if ($(obj).closest('td').data('variant') == "Color") {
+                    $(obj).css('width', '80%')
+                }
+                else {
+                    $(obj).css('width', '100%')
+                }
+            })
             $($('.table-responsive-stack').find('input[type=number]')).each(function (ind, obj) { $(obj).css('width', '100%') })
         }
         // flextable   
@@ -410,3 +426,9 @@ function formatState(state) {
     );
     return $state;
 };
+
+$(document).on('select2:select', '.custom-ddl-color', function (e) {
+    $(this).parent().find('#selectedColorSample').remove();
+    $(this).parent().find('.select2-container').after('<span id="selectedColorSample" style="display:inline-block;background-color:' + $(this).val() + ';height:15px;width:15px; margin-left:10px"></span>')
+});
+

@@ -272,7 +272,7 @@
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div>
-                            <a href="javascript:" id="btnClearCart" onclick="clearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart(s)</a>
+                            <a href="javascript:" id="btnClearCart" onclick="confirmClearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart(s)</a>
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div>
@@ -361,7 +361,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.20</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.21</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>
@@ -419,6 +419,31 @@
 
         </div>
     </div>
+
+    <div class="modal fade" id="confirmClearCart" role="dialog" style="background-color:rgba(0,0,0,0.7)">
+        <div class="modal-dialog delete-modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row row-sparse">
+                        <div class="col-xs-12">
+                            <h6>Are you sure to clear cart(s)?</h6>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-xs btn-danger" onclick="clearCart()">Clear</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div><!-- End .product-single-gallery -->
+                    </div><!-- End .row -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
     <!-- Plugins JS File -->
     <script src="assets/js/jquery.min.js"></script>

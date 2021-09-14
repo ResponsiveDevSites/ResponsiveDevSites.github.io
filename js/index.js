@@ -4,6 +4,9 @@ $(document).ready(function () {
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
         categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
+        loadMenuCategories(categoryResult);
+        loadSearchCategories(categoryResult);
+        loadMobileViewMenuCat(categoryResult);
     }
     else {
         categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
