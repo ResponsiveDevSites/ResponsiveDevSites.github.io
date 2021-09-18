@@ -1,6 +1,9 @@
 
 $(document).ready(function () {
-    //fetch categories and products from local storage
+
+    /* fetches categories and products from local storage,
+    if doesnt found, makes an ajax call and then loads Menu and products.*/
+
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
 

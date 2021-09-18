@@ -1,7 +1,10 @@
 var variantCollection = [];
 
 $(document).ready(function () {
-    //fetch categories and products from local storage
+
+    /* fetches categories, products and product details from local storage,
+   if doesnt found, makes an ajax call and then loads Menu and product details.*/
+
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
     productVariantsResult = JSON.parse(localStorage.getItem("productVariantsResult"));
@@ -414,19 +417,20 @@ function responsiveTable() {
 }
 function initalizeSelect2() {
     $('.custom-ddl-color').select2({
-        templateResult: formatState
+        templateResult: formatOptions
     });
     $('.custom-ddl').select2();
 }
-function formatState(state) {
-    if (!state.id) {
-        return state.text;
+
+function formatOptions(option) {
+    if (!option.id) {
+        return option.text;
     }
-    var baseUrl = "/user/pages/images/flags";
-    var $state = $(
-        '<span><i class="fa fa-square" style="font-size:20px; color:' + state.element.value.toLowerCase() + '" /> ' + state.text + '</span>'
+    
+    var $option = $(
+        '<span><i class="fa fa-square" style="font-size:20px; color:' + option.element.value.toLowerCase() + '" /> ' + option.text + '</span>'
     );
-    return $state;
+    return $option;
 };
 
 $(document).on('select2:select', '.custom-ddl-color', function (e) {

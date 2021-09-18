@@ -29,6 +29,7 @@ var categoryResult = null;
 var productResult = null;
 var productVariantsResult = null;
 
+/*Function to fetch product categories*/
 function getCategoriesAjax() {
 
     $.ajax({
@@ -43,6 +44,8 @@ function getCategoriesAjax() {
         }
     });
 }
+
+/*Function to fetch products*/
 function getProductsAjax() {
     $.ajax({
         type: "GET",
@@ -57,6 +60,8 @@ function getProductsAjax() {
     });
 
 }
+
+/*Function to fetch product details*/
 function getProductVariantsAjax() {
     $.ajax({
         type: "GET",
@@ -71,7 +76,12 @@ function getProductVariantsAjax() {
         }
     });
 }
+
+/*Load categories for main menu*/
 function loadMenuCategories(categories) {
+
+    /* main menu contains two columns so total product list length is devided by two and shown in two columns*/
+
     var catPart1 = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     var catPart2 = '';
     var partition = Math.round((categories.length / 2));
@@ -85,13 +95,18 @@ function loadMenuCategories(categories) {
     $('#catPart1').html(catPart1);
     $('#catPart2').html(catPart2);
 }
+
+/* categories show in global search dropdown*/
 function loadSearchCategories(categories) {
+
     var ddlOptions = "<option value=''>All Categories</option>";
     for (var i = 0; i < categories.length; i++) {
         ddlOptions += "<option value=''>" + categories[i] + "</option>";
     }
     $('#searchCat').html(ddlOptions);
 }
+
+/* Load categories for mobile view main menu (responsive menu) */
 function loadMobileViewMenuCat(categories) {
     var mobileViewMenuCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
     for (var i = 0; i < categories.length; i++) {
@@ -100,12 +115,15 @@ function loadMobileViewMenuCat(categories) {
         $('#mobileViewMenuCat').html(mobileViewMenuCat);
     }
 }
+
+/* Shows user agent details at bottom right corner*/
 function getUserAgent() {
     var txt = navigator.userAgent;
     txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
     txt += "<br>Browser Online: " + navigator.onLine;
     $('#userAgent').html(txt);
 }
+/* updates the count of cart to show on cart icon at top header */
 function updateCartCount() {
     if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != "") {
         var cartObj = JSON.parse(localStorage.getItem("cart"));
@@ -115,6 +133,8 @@ function updateCartCount() {
         $('#cartItemCount').html('0');
     }
 }
+
+/* to navigate to products page on click of categories from menu  */
 function navigateToProducts(Category) {
     sessionStorage.setItem("selectedCategory", Category);
     window.location.href = "products.html";

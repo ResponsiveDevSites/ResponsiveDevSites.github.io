@@ -1,9 +1,11 @@
 
 $(document).ready(function () {
+    /* fetches categories and products from local storage, 
+    if doesnt found, makes an ajax call and then loads Menu and featured products.*/
 
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
-    
+
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
         categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
@@ -17,7 +19,7 @@ $(document).ready(function () {
         loadSearchCategories(categoryResult);
         loadMobileViewMenuCat(categoryResult);
     }
-    
+
     if (productResult == null || productResult == '') {
         getProductsAjax();
         productResult = JSON.parse(localStorage.getItem("productResult"));
@@ -30,7 +32,10 @@ $(document).ready(function () {
     updateCartCount();
 });
 
+/*Loads featured products */
 function loadFeaturedProducts(products) {
+
+    /* Generate random numbers from 1 to product list length and shows 8 products randomly in featured products */
     var featuredProductBlock = '';
     for (var i = 0; i < 8; i++) {
         var product = products[Math.floor(Math.random() * products.length)];
@@ -38,6 +43,7 @@ function loadFeaturedProducts(products) {
     }
 
     $('#featuredProductBlock').html(featuredProductBlock);
+    /* After loading featured products HTML, need to re-initialize slider since the HTML and images are created newly in DOM */
 
     var newSliderOptions = {
         "loop": false,
@@ -65,8 +71,12 @@ function loadFeaturedProducts(products) {
     $('#featuredProductBlock').owlCarousel(newSliderOptions);
 
 }
+/* Shows quick view on click of quick button on products */
+
 function quickView(productID) {
+
     var product = productResult.filter(function (obj) {
+        //filter out clicked product from all product lists
         return (obj[1] === productID)
     });
 
@@ -75,6 +85,7 @@ function quickView(productID) {
     $('#quickViewProductDescription').html(product[0][4]);
     $('#quickView').modal('show');
 }
+/*navigates to product details page on click of any product (featured products in this page) */
 function navigateToProductDetails(productID) {
     sessionStorage.setItem("selectedProductID", productID);
     window.location.href = "productdetails.html";
