@@ -3,6 +3,8 @@ var variantCollection = [];
 $(document).ready(function () {
     //fetch categories and products from local storage
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
+    productResult = JSON.parse(localStorage.getItem("productResult"));
+    productVariantsResult = JSON.parse(localStorage.getItem("productVariantsResult"));
 
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();

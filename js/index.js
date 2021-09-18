@@ -1,6 +1,9 @@
 
 $(document).ready(function () {
 
+    categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
+    productResult = JSON.parse(localStorage.getItem("productResult"));
+    
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
         categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
@@ -14,9 +17,12 @@ $(document).ready(function () {
         loadSearchCategories(categoryResult);
         loadMobileViewMenuCat(categoryResult);
     }
+    
     if (productResult == null || productResult == '') {
         getProductsAjax();
         productResult = JSON.parse(localStorage.getItem("productResult"));
+        loadFeaturedProducts(productResult);
+
     }
     else {
         loadFeaturedProducts(productResult);
@@ -73,4 +79,3 @@ function navigateToProductDetails(productID) {
     sessionStorage.setItem("selectedProductID", productID);
     window.location.href = "productdetails.html";
 }
- 
