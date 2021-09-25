@@ -1,11 +1,6 @@
 
 $(document).ready(function () {
 
-    $("#quickBuyViewPopup").downupPopup({
-        distance: 20,
-        width: "98%"
-    });
-
     /* fetches categories and products from local storage,
     if doesnt found, makes an ajax call and then loads Menu and products.*/
 
@@ -50,7 +45,6 @@ $(document).ready(function () {
 function refreshData() {
     getCategoriesAjax();
     getProductsAjax();
-    window.location.href = "products.html";
 }
 function loadProductsSideBarCategories(categories) {
     var sidebarCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
@@ -73,20 +67,30 @@ function loadProducts(products) {
     $('#breadcrumb-selected-category').html(selectedCategory);
     var productBlock = '';
     for (var i = 0; i < products.length; i++) {
-        productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img src="ProductImages/' + products[i][3] + '"></a><div class="btn-icon-group"><button class="btn-icon-buy btn btn-info" id="btnQuickBuy" onclick="showQuickBuy(\'' + products[i][1] + '\')" >Buy</button></div> </figure><div class="product-details"><div class="category-wrap">  <div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div> </div><h3 class="product-title"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')" href="javascript:">' + products[i][2] + '</a></h3> </div>  </div></div>';
+        productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img src="ProductImages/' + products[i][3] + '"></a><a href="javascript:" class="btn-quickview" onclick="quickView(\'' + products[i][1] + '\')" title="Quick View">Quick View</a></figure><div class="product-details"><div class="category-wrap"><div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div></div><h3 class="product-title"><a onclick="navigateToProductDetails("' + products[i][1] + '")" href="javascript:">' + products[i][2] + '</a></h3></div></div></div>';
     }
     $('#productBlock').html(productBlock);
 }
+function quickView(productID) {
+    var product = productResult.filter(function (obj) {
+        return (obj[1] === productID)
+    });
 
-function showQuickBuy(productID) {
-    sessionStorage.setItem("selectedProductID", productID);
-    $('#quickBuyViewPopup').downupPopup('open');
-    var iframe = document.getElementById("quickBuyView");
-    iframe.src = iframe.src;
+    $('#quickViewProductImage').attr('src', 'ProductImages/' + product[0][3]);
+    $('#quickViewProductName').html(product[0][2]);
+    $('#quickViewProductDescription').html(product[0][4]);
+    $('#quickView').modal('show');
 }
-
 function navigateToProductDetails(productID) {
     sessionStorage.setItem("selectedProductID", productID);
     window.location.href = "productdetails.html";
 }
 
+function getUserAgent() {
+    var txt = navigator.userAgent;
+    txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
+    txt += "<br>Browser Online: " + navigator.onLine;
+    $('#userAgent').html(txt);
+}
+
+ 

@@ -53,10 +53,6 @@ function loadReviewCart() {
         if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '' && localStorage.getItem("cart") != "[]") {
             cartObj = JSON.parse(localStorage.getItem("cart"));
         }
-        if (localStorage.getItem("previousCart") == null || localStorage.getItem("previousCart") == '' || localStorage.getItem("previousCart") == "[]") {
-            $('#btnShowPreviousCart').hide();
-            $('#btnShowCurrentCart').hide();
-        }
     }
     if (cartObj.length > 0) {
 

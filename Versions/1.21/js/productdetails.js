@@ -266,7 +266,6 @@ function removeRow() {
  */
 
 function addToCart(finalize) {
-
     var isValid = true;
     var isDuplicate = false;
     var cartObj = [];
@@ -361,13 +360,7 @@ function addToCart(finalize) {
         localStorage.setItem("cart", JSON.stringify(cartObj));
 
         /*if add and finalized button clicked, it redirects to review page*/
-        if (finalize == "iframe-false") {
-            $('#quickBuyView').closest('#quickBuyViewPopup').downupPopup('close');
-        }
-        if (finalize == "iframe-true") {
-            window.parent.location.href = "review.html";
-        }
-        else if (finalize == 'true') {
+        if (finalize == 'true') {
             window.location.href = "review.html"
         }
         $('#validationMsg').removeClass('alert alert-danger');

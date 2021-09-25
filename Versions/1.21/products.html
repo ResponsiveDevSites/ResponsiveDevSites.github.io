@@ -27,7 +27,6 @@
         })(document);
 
     </script>
-
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
@@ -40,25 +39,6 @@
             height: auto !important;
         }
 
-        .inline-list li {
-            display: inline;
-            padding: 0px 5px;
-        }
-
-        .cart-btn:after {
-            content: "\e81c";
-            border: 0;
-            margin: -5px 2px 0 11px;
-            font-size: 15px;
-            font-family: porto;
-            width: auto;
-            height: auto;
-        }
-
-        .hide {
-            display: none;
-        }
-
         .dropdown-arrow:after {
             content: none;
             border: 0;
@@ -67,73 +47,6 @@
             font-family: porto;
             width: auto;
             height: auto;
-        }
-
-        .btn-xs {
-            padding: 1px 10px;
-            font-size: 10px;
-            line-height: 2.5;
-        }
-
-        .btn-xs-edit {
-            padding: 1px 10px;
-            font-size: 10px;
-            line-height: 2.5;
-        }
-
-        .btn-xs-delete {
-            padding: 1px 11px;
-            font-size: 10.5px;
-            line-height: 2.4;
-            margin-top: 10px;
-        }
-
-        .list li a {
-            padding: 0.5rem 0 .5rem 2rem !important;
-        }
-        /* Extra small devices (phones, 600px and down) */
-        @media only screen and (max-width: 600px) {
-            .delete-modal-sm {
-                width: 100%;
-            }
-
-            #confirmDelete {
-                padding-right: 10% !important;
-                padding-left: 10% !important;
-            }
-        }
-
-        /* Small devices (portrait tablets and large phones, 600px and up) */
-        @media only screen and (min-width: 600px) {
-            .delete-modal-sm {
-                width: 100%;
-            }
-
-            #confirmDelete {
-                padding-right: 10% !important;
-                padding-left: 10% !important;
-            }
-        }
-
-        /* Medium devices (landscape tablets, 768px and up) */
-        @media only screen and (min-width: 768px) {
-            .delete-modal-sm {
-                width: 30%;
-            }
-        }
-
-        /* Large devices (laptops/desktops, 992px and up) */
-        @media only screen and (min-width: 992px) {
-            .delete-modal-sm {
-                width: 30%;
-            }
-        }
-
-        /* Extra large devices (large laptops and desktops, 1200px and up) */
-        @media only screen and (min-width: 1200px) {
-            .delete-modal-sm {
-                width: 30%;
-            }
         }
     </style>
 
@@ -237,55 +150,75 @@
     </header><!-- End .header -->
 
     <main class="main">
+        <div class="category-banner-container bg-gray">
+            <div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/banners/banner-top.jpg');">
+                <div class="container position-relative">
+                    <div class="row">
+                        <div class="pl-lg-5 pb-5 pb-md-0 col-md-5 col-xl-4 col-lg-4 offset-1">
+                            <h3 class="ml-lg-5 mb-2 ls-10">Check our <br> Product Range</h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="container" style="min-height:510px;">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><span id="activeBreadCrumb">Review</span> </li>
+                    <li class="breadcrumb-item active" aria-current="page"><span id="breadcrumb-selected-category"></span></li>
                 </ol>
             </nav>
 
             <div class="row">
-                <div class="col-lg-8 main-content">
-                    <table class="table table-mini-cart">
-                        <tbody id="reviewCart">
-                            <tr><td>Loading...</td></tr>
-                        </tbody>
-                    </table>
+                <div class="col-lg-9 main-content">
+                    <nav class="toolbox">
+                        <div class="toolbox-left">
 
-                </div>
-                <div class="col-lg-4">
-                    <div class="cart-summary">
-                        <div class="checkout-methods">
-                            <a href="javascript:" onclick="submitOrder()" id="btnSubmitOrder" class="btn btn-block btn-sm btn-primary">Submit</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div class="checkout-methods">
-                            <a href="products.html" id="btnContinueToProducts" class="btn btn-block btn-sm btn-primary">Continue to Products</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <a href="javascript:" id="btnShowCurrentCart" onclick="switchCart(false)" class="btn btn-sm btn-block btn-outline-secondary hide">Show Current Cart</a>
-                            <a href="javascript:" id="btnShowPreviousCart" onclick="switchCart(true)" class="btn btn-sm btn-block btn-outline-secondary">Show Previous Cart</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <a href="javascript:" id="btnClearCart" onclick="confirmClearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart(s)</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <div class="alert alert-success hide" id="msg-container">
-                                <span id="msg"></span> <br />Redirecting to products in <span id="timeLeft">5</span> ...
-                            </div>
-                        </div>
+                        </div><!-- End .toolbox-left -->
 
-                    </div><!-- End .cart-summary -->
+                        <div class="toolbox-right">
+                            <div class="toolbox-item toolbox-show">
+                                <input type="text" id="txtSearch" class="form-input" style="height:34px" placeholder="Search" />
+                            </div><!-- End .toolbox-item -->
+                            <div class="toolbox-item toolbox-show">
+                                |
+                            </div><!-- End .toolbox-item -->
 
-                </div><!-- End .col-lg-4 -->
-            </div>
+                            <div class="toolbox-item">
+                                <button class="btn btn-info" style="padding: 7px 11px !important" onclick="refreshData()" title="Refresh">
+                                    <i class="fa fa-sync"></i>
+                                </button>
 
+                            </div><!-- End .layout-modes -->
+                        </div><!-- End .toolbox-right -->
+                    </nav>
+                    <div class="row" id="productBlock">
+
+                    </div><!-- End .row -->
+                </div><!-- End .col-lg-9 -->
+
+                <div class="sidebar-overlay"></div>
+
+                <aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
+                    <div class="sidebar-wrapper">
+                        <div class="widget">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
+                            </h3>
+
+                            <div class="collapse show" id="widget-body-2">
+                                <div class="widget-body">
+                                    <ul class="cat-list" id="sidebarCat">
+                                    </ul>
+                                </div><!-- End .widget-body -->
+                            </div><!-- End .collapse -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .sidebar-wrapper -->
+                </aside><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
         </div><!-- End .container -->
 
         <div class="mb-3"></div><!-- margin -->
@@ -361,7 +294,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.22</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.21</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>
@@ -395,55 +328,38 @@
         </div><!-- End .mobile-menu-wrapper -->
     </div><!-- End .mobile-menu-container -->
 
-    <div class="modal fade" id="confirmDelete" role="dialog" style="background-color:rgba(0,0,0,0.7)">
-        <div class="modal-dialog delete-modal-sm">
+    <div class="modal fade" id="quickView" role="dialog">
+        <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row row-sparse">
-                        <div class="col-xs-12">
-                            <h6>Are you sure to delete?</h6>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs btn-danger" onclick="deleteCartRow()">Delete</button>
+                        <div class="col-lg-6">
+                            <div class="">
+                                <div class="product-item">
+                                    <img class="product-single-image" id="quickViewProductImage" />
                                 </div>
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
-                                </div>
+                                <!-- End .product-single-carousel -->
                             </div>
-                            <input type="hidden" id="hdnValueToDelete" />
+
                         </div><!-- End .product-single-gallery -->
+
+                        <div class="col-lg-6 product-single-details">
+                            <h1 class="product-title" id="quickViewProductName">Product Name</h1>
+                            <hr class="divider">
+                            <div class="product-desc">
+                                <p id="quickViewProductDescription"></p>
+                            </div><!-- End .product-desc -->
+                        </div><!-- End .product-single-details -->
                     </div><!-- End .row -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
 
         </div>
     </div>
-
-    <div class="modal fade" id="confirmClearCart" role="dialog" style="background-color:rgba(0,0,0,0.7)">
-        <div class="modal-dialog delete-modal-sm">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row row-sparse">
-                        <div class="col-xs-12">
-                            <h6>Are you sure to clear cart(s)?</h6>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs btn-danger" onclick="clearCart()">Clear</button>
-                                </div>
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div><!-- End .product-single-gallery -->
-                    </div><!-- End .row -->
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 
     <!-- Plugins JS File -->
     <script src="assets/js/jquery.min.js"></script>
@@ -452,6 +368,7 @@
     <!-- Main JS File -->
     <script src="assets/js/main.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/review.js"></script>
+    <script src="js/products.js"></script>
+
 </body>
 </html>
