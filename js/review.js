@@ -58,6 +58,12 @@ function loadReviewCart() {
             $('#btnShowCurrentCart').hide();
         }
     }
+
+    if ((localStorage.getItem("cart") == null && localStorage.getItem("cart") == '' && localStorage.getItem("cart") == "[]") ||
+        (localStorage.getItem("previousCart") == null || localStorage.getItem("previousCart") == '' || localStorage.getItem("previousCart") == "[]")) {
+
+    }
+
     if (cartObj.length > 0) {
 
         var cartItemBlock = '';

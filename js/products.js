@@ -51,8 +51,7 @@ function refreshData() {
     getCategoriesAjax();
     getProductsAjax();
     getProductVariantsAjax();
-    alert('test');
-    //window.location.href = "products.html";
+    window.location.href = "products.html";
 }
 function loadProductsSideBarCategories(categories) {
     var sidebarCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
