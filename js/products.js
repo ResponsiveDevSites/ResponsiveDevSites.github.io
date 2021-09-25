@@ -51,6 +51,7 @@ function refreshData() {
     getCategoriesAjax();
     getProductsAjax();
     getProductVariantsAjax();
+    alert('test');
     window.location.href = "products.html";
 }
 function loadProductsSideBarCategories(categories) {
