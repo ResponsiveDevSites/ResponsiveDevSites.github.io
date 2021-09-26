@@ -8,7 +8,6 @@ $(document).ready(function () {
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
     productVariantsResult = JSON.parse(localStorage.getItem("productVariantsResult"));
-
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
         categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
@@ -38,7 +37,7 @@ $(document).ready(function () {
 
 /* function to load product details and add to cart grid */
 function loadProductDetails() {
-
+    
     var productID = "";
 
     if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {

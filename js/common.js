@@ -14,14 +14,14 @@ var readCategoryURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + categor
 /*Read products*/
 var productSheetName = "Products";
 var productFromRange = "A1";
-var productToRange = "E12";
+var productToRange = "F60";
 var readProductURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + productSheetName + "!" + productFromRange + ":" + productToRange + "?key=" + apiKey;
 /*Read products ends*/
 
 /*Read products*/
 var productVariantsSheetName = "ProductVariants";
 var productVariantsFromRange = "A1";
-var productVariantsToRange = "F20";
+var productVariantsToRange = "F35";
 var readProductVariantsURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + productVariantsSheetName + "!" + productVariantsFromRange + ":" + productVariantsToRange + "?key=" + apiKey;
 /*Read products ends*/
 
@@ -67,6 +67,7 @@ function getProductVariantsAjax() {
         type: "GET",
         url: readProductVariantsURL,
         cache: false,
+        async: false,
         dataType: "json",
         success: function (data) {
             productVariantsResult = data.values.slice(1); //removed first row. it contains column title
