@@ -37,7 +37,7 @@ $(document).ready(function () {
 
 /* function to load product details and add to cart grid */
 function loadProductDetails() {
-    
+
     var productID = "";
 
     if (sessionStorage.getItem("cartProductToEdit") != null && sessionStorage.getItem("cartProductToEdit") != '') {
@@ -490,3 +490,19 @@ $(document).on('select2:select', '.custom-ddl-color', function (e) {
     $(this).parent().find('.select2-container').after('<span id="selectedColorSample" style="display:inline-block;background-color:' + $(this).val() + ';height:15px;width:15px; margin-left:10px"></span>')
 });
 
+$(document).on('blur', '.qty-number', function () {
+    if ($(this).val() != '') {
+        var productID = $('#hdnProductID').val();
+        var product = productResult.filter(function (obj) {
+            return (obj[1] === productID)
+        });
+        var roundToNext = product[0][5];
+        if (roundToNext != null) {
+            var roundValue = roundToNext.match(/(\d+)/);
+            if (roundValue) {
+                $(this).val((Math.ceil($(this).val() / roundValue[0]) * roundValue[0]));
+            }
+        }
+    }
+
+});
