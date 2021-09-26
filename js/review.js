@@ -45,6 +45,12 @@ function loadReviewCart() {
         //checks if call is to show previous cart, then assign previous cart object to cartObj
         if (localStorage.getItem("previousCart") != null && localStorage.getItem("previousCart") != '' && localStorage.getItem("previousCart") != "[]") {
             cartObj = JSON.parse(localStorage.getItem("previousCart"));
+            $('#btnClearPreviousCart').removeClass('hide');
+            $('#btnClearCurrentCart').addClass('hide');
+            $('#btnSubmitOrder').addClass('hide');
+        }
+        else {
+            $('#btnClearPreviousCart').addClass('hide');
         }
 
     }
@@ -52,10 +58,16 @@ function loadReviewCart() {
         //else shows current cart
         if (localStorage.getItem("cart") != null && localStorage.getItem("cart") != '' && localStorage.getItem("cart") != "[]") {
             cartObj = JSON.parse(localStorage.getItem("cart"));
+            $('#btnClearPreviousCart').addClass('hide');
+            $('#btnClearCurrentCart').removeClass('hide');
+            $('#btnSubmitOrder').removeClass('hide');
+        }
+        else {
+            $('#btnClearCurrentCart').addClass('hide');
         }
         if (localStorage.getItem("previousCart") == null || localStorage.getItem("previousCart") == '' || localStorage.getItem("previousCart") == "[]") {
-            $('#btnShowPreviousCart').hide();
-            $('#btnShowCurrentCart').hide();
+            $('#btnShowPreviousCart').addClass('hide');
+            $('#btnShowCurrentCart').addClass('hide');
         }
     }
     if (cartObj.length > 0) {
@@ -108,7 +120,7 @@ function loadReviewCart() {
         else {
             $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
         }
-        $('#btnSubmitOrder').addClass('disabled');
+        $('#btnSubmitOrder').addClass('hide');
     }
     if (sessionStorage.getItem("showPreviousCart") == "1") {
         //if previous cart is loaded. all unwanted buttons are hidden.
@@ -117,20 +129,25 @@ function loadReviewCart() {
         $('#activeBreadCrumb').text('Previous Cart');
         $('#btnShowCurrentCart').removeClass('hide');
         $('#btnShowPreviousCart').addClass('hide');
-
         sessionStorage.setItem("showPreviousCart", "");
     }
 
 }
 
 /*Section - clear cart*/
-function confirmClearCart() {
+function confirmClearCart(cartType) {
+    $('#hdnCartTypeToDelete').val(cartType);
     $('#confirmClearCart').modal('show');
 }
 function clearCart() {
     $('#confirmClearCart').modal('hide');
-    localStorage.setItem("cart", '');
-    localStorage.setItem("previousCart", '');
+    if ($('#hdnCartTypeToDelete').val() == 'current-cart') {
+        localStorage.setItem("cart", '');
+    }
+    else if ($('#hdnCartTypeToDelete').val() == 'previous-cart') {
+        localStorage.setItem("previousCart", '');
+    }
+
     $('#btnSubmitOrder').addClass('disabled');
     $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
     updateCartCount();

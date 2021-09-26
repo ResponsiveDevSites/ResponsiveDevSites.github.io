@@ -272,7 +272,8 @@
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div>
-                            <a href="javascript:" id="btnClearCart" onclick="confirmClearCart()" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart(s)</a>
+                            <a href="javascript:" id="btnClearPreviousCart" onclick="confirmClearCart('previous-cart')" class="btn btn-sm btn-block btn-outline-secondary hide">Clear Cart</a>
+                            <a href="javascript:" id="btnClearCurrentCart" onclick="confirmClearCart('current-cart')" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart</a>
                         </div><!-- End .checkout-methods -->
                         <br />
                         <div>
@@ -427,7 +428,7 @@
                 <div class="modal-body">
                     <div class="row row-sparse">
                         <div class="col-xs-12">
-                            <h6>Are you sure to clear cart(s)?</h6>
+                            <h6>Are you sure to clear cart?</h6>
                             <div class="row">
                                 <div class="col-xs-6">
                                     <button type="button" class="btn btn-xs btn-danger" onclick="clearCart()">Clear</button>
@@ -436,6 +437,7 @@
                                     <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
+                            <input type="hidden" id="hdnCartTypeToDelete" />
                         </div><!-- End .product-single-gallery -->
                     </div><!-- End .row -->
                 </div>
