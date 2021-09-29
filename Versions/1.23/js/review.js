@@ -105,9 +105,6 @@ function loadReviewCart() {
                 }
             }
             variantBlock += '<li><a href="javascript:">Created Date: <span class="">' + cartObj[i].CreatedDate + '</span></a></li>';
-            if (cartObj[i].ProductComment != '') {
-                variantBlock += '<li><a href="javascript:">Comments: <span class="">' + cartObj[i].ProductComment + '</span></a></li>';
-            }
 
             /*Completes the <tr> by replacing @@VariantOptions with prepared <li> list of variants*/
             cartItemBlock = cartItemBlock.replace("@@VariantOptions", variantBlock);

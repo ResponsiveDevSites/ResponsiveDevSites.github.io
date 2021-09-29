@@ -127,8 +127,6 @@ function loadProductDetails() {
                 return (obj.ProductID === productIDtoEdit)
             });
 
-            $('#txtProductComments').val(existingCart[0].ProductComment);
-
             /* loop to create table rows with existing cart items */
 
             for (var i = 0; i < existingCart.length; i++) {
@@ -288,7 +286,6 @@ function addToCart(finalize) {
         today = dd + '-' + mm + '-' + yyyy;
         cartItem["CreatedDate"] = today;
         cartItem["CartRowIndex"] = '';
-        cartItem["ProductComment"] = $('#txtProductComments').val().trim();
 
         $(object).find('td').each(function (ind, obj) {
 
@@ -374,7 +371,7 @@ function addToCart(finalize) {
         }
         $('#validationMsg').removeClass('alert alert-danger');
         $('#validationMsg').addClass('alert alert-success');
-        $('#validationMsg').html('Item saved to cart..')
+        $('#validationMsg').html('Item added..')
     }
     else {
 
