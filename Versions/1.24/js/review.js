@@ -44,10 +44,7 @@ function loadReviewCart() {
     if (sessionStorage.getItem("showPreviousCart") == "1") {
         //checks if call is to show previous cart, then assign previous cart object to cartObj
         if (localStorage.getItem("previousCart") != null && localStorage.getItem("previousCart") != '' && localStorage.getItem("previousCart") != "[]") {
-            cartObj = JSON.parse(localStorage.getItem("previousCart"))[0].Cart; // Order json will contain only one row, so [0]th position.
-            $('#txtOrderComments').val(JSON.parse(localStorage.getItem("previousCart"))[0].OrderComment);
-            $('#txtOrderComments').attr('disabled','disabled');
-
+            cartObj = JSON.parse(localStorage.getItem("previousCart"));
             $('#btnClearPreviousCart').removeClass('hide');
             $('#btnClearCurrentCart').addClass('hide');
             $('#btnSubmitOrder').addClass('hide');
@@ -127,7 +124,6 @@ function loadReviewCart() {
             $('#reviewCart').html('<tr><td  colspan="3">No Items..</td></tr>');
         }
         $('#btnSubmitOrder').addClass('hide');
-        $('#divComments').addClass('hide');
     }
     if (sessionStorage.getItem("showPreviousCart") == "1") {
         //if previous cart is loaded. all unwanted buttons are hidden.
@@ -173,16 +169,10 @@ function clearCart() {
 
 /* submit order.*/
 function submitOrder() {
-    var Order = [];
 
-    var OrderObj = {};
-
-    OrderObj.OrderComment = $('#txtOrderComments').val().trim();
-    OrderObj.Cart = JSON.parse(localStorage.getItem("cart"));
-    Order.push(OrderObj);
-
-    /* moves current order to previous cart */
-    localStorage.setItem("previousCart", JSON.stringify(Order));
+    var existingCart = JSON.parse(localStorage.getItem("cart"));
+    /* moves current cart to previous cart */
+    localStorage.setItem("previousCart", JSON.stringify(existingCart));
 
     $("#msg-container").removeClass('hide');
     $("#msg").html('Submitted successfully...')
