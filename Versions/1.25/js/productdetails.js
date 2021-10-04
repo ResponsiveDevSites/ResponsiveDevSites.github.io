@@ -481,29 +481,16 @@ function formatOptions(option) {
     if (!option.id) {
         return option.text;
     }
-    var $option = '';
-
-    if (option.element.value.toLowerCase().indexOf('x') == -1) {
-        $option = $(
-            '<div><span style="height:18px; width:18px; margin-right:3px; display:inline-block; border:solid 1px black; background-color:' + option.element.value.toLowerCase() + '" ></span>' + option.text + '</div>'
-        );
-
-    } else {
-        $option = $(
-            '<div><span style="height:18px; width:18px; margin-right:3px; display:inline-block;" ></span>' + option.text + '</div>'
-        );
-    }
-
+    var $option = $(
+        '<span><i class="fa fa-square" style="font-size:20px; color:' + option.element.value.toLowerCase() + '" /> ' + option.text + '</span>'
+    );
     return $option;
 };
 
 /*on color selection, this is to show selected color box after the dropdown in grid*/
 $(document).on('select2:select', '.custom-ddl-color', function (e) {
     $(this).parent().find('#selectedColorSample').remove();
-    if ($(this).val().toLowerCase().indexOf('x') == -1) {
-        $(this).parent().find('.select2-container').after('<span id="selectedColorSample" style="display:inline-block; border:solid 1px black; background-color:' + $(this).val() + '; height:15px; width:15px; margin-left:10px"></span>')
-    }
-
+    $(this).parent().find('.select2-container').after('<span id="selectedColorSample" style="display:inline-block;background-color:' + $(this).val() + ';height:15px;width:15px; margin-left:10px"></span>')
 });
 
 $(document).on('blur', '.qty-number', function () {

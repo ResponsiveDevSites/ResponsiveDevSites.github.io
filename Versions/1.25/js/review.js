@@ -46,7 +46,7 @@ function loadReviewCart() {
         if (localStorage.getItem("previousCart") != null && localStorage.getItem("previousCart") != '' && localStorage.getItem("previousCart") != "[]") {
             cartObj = JSON.parse(localStorage.getItem("previousCart"))[0].Cart; // Order json will contain only one row, so [0]th position.
             $('#txtOrderComments').val(JSON.parse(localStorage.getItem("previousCart"))[0].OrderComment);
-            $('#txtOrderComments').attr('disabled', 'disabled');
+            $('#txtOrderComments').attr('disabled','disabled');
 
             $('#btnClearPreviousCart').removeClass('hide');
             $('#btnClearCurrentCart').addClass('hide');
@@ -100,12 +100,8 @@ function loadReviewCart() {
                 });
 
                 if (variantList[j][0] == "Color") {
-                    if (currentVariant[0][4].toLowerCase().indexOf('x') == -1) {
-                        variantBlock += '<li><a href="javascript:">Color:  <span class="">' + currentVariant[0][4] + '</span> | <div style="background-color: ' + variantList[j][1] + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px; border:solid 1px black"></div></a> </li>';
-                    }
-                    else {
-                        variantBlock += '<li><a href="javascript:">Color:  <span class="">' + currentVariant[0][4] + '</span></li>';
-                    }
+
+                    variantBlock += '<li><a href="javascript:">Color:  <span class="">' + currentVariant[0][4] + '</span> | <div style="background-color: ' + variantList[j][1] + '; height: 20px; width: 20px; display: inline-block; margin-bottom: -5px;"></div></a> </li>';
                 }
                 else {
                     variantBlock += '<li><a href="javascript:">' + variantList[j][0] + ': <span class="">' + currentVariant[0][4] + '</span></a></li>';
