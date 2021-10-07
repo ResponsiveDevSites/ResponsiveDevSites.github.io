@@ -25,55 +25,80 @@
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
-
     </script>
+    <style>
+        .table-responsive-stack tr {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+
+        .table-responsive-stack td,
+        .table-responsive-stack th {
+            display: block;
+            /*
+        flex-grow | flex-shrink | flex-basis   */
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+        }
+
+        .table-responsive-stack .table-responsive-stack-thead {
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-responsive-stack tr {
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                display: block;
+            }
+
+                .table-responsive-stack tr .last-odd {
+                    border-bottom: 3px solid #08C;
+                }
+            /*  IE9 FIX   */
+            /*  .table-responsive-stack td {
+                float: left\9;
+                width: 100%;
+            }*/
+            /*  IE9 FIX   */
+            .table-responsive-stack td {
+                float: left;
+                width: 50%;
+            }
+
+                .table-responsive-stack td.last-odd {
+                    float: left;
+                    width: 100%;
+                }
+        }
+
+        #txtProductComments {
+            max-width: none !important;
+            min-height: auto !important;
+            padding: 1.5rem !important;
+        }
+    </style>
+
+
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="assets/css/style.min.css">
     <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-    <link rel="stylesheet" href="assets/downupPopup/downupPopup.css">
     <style>
         .img-responsive {
             display: block !important;
             max-width: 100% !important;
             height: auto !important;
-        }
-
-        .dropdown-arrow:after {
-            content: none;
-            border: 0;
-            margin: -5px 2px 0 11px;
-            font-size: 15px;
-            font-family: porto;
-            width: auto;
-            height: auto;
-        }
-
-
-        .inner-icon figure .btn-icon-buy {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin: 0 0 5px;
-            width: 36px;
-            height: 36px;
-            padding: 0;
-            /* opacity: 0; */
-            /* visibility: hidden; */
-            transition: all .3s;
-            transform: none;
-            padding: 0 1rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            font-family: Poppins,sans-serif;
-            line-height: 34px;
-            text-align: center;
-            vertical-align: top;
-            cursor: pointer;
-            transition: all .25s ease;
         }
 
         .inline-list li {
@@ -172,66 +197,8 @@
                 width: 30%;
             }
         }
-
-        .table-responsive-stack tr {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-            flex-direction: row;
-        }
-
-
-        .table-responsive-stack td,
-        .table-responsive-stack th {
-            display: block;
-            /*
-        flex-grow | flex-shrink | flex-basis   */
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-        }
-
-        .table-responsive-stack .table-responsive-stack-thead {
-            font-weight: bold;
-        }
-
-        @media screen and (max-width: 768px) {
-            .table-responsive-stack tr {
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -ms-flex-direction: column;
-                flex-direction: column;
-                display: block;
-            }
-
-                .table-responsive-stack tr .last-odd {
-                    border-bottom: 3px solid #08C;
-                }
-            /*  IE9 FIX   */
-            /*  .table-responsive-stack td {
-                float: left\9;
-                width: 100%;
-            }*/
-            /*  IE9 FIX   */
-            .table-responsive-stack td {
-                float: left;
-                width: 50%;
-            }
-
-                .table-responsive-stack td.last-odd {
-                    float: left;
-                    width: 100%;
-                }
-        }
-
-        #txtProductComments {
-            max-width: none !important;
-            min-height: auto !important;
-            padding: 1.5rem !important;
-        }
     </style>
+
 </head>
 <body>
     <div class="owl-carousel owl-theme owl-carousel-lazy" data-owl-options="{
@@ -332,63 +299,107 @@
     </header><!-- End .header -->
 
     <main class="main">
+
         <div class="container" style="min-height:510px;">
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><span id="breadcrumb-selected-category"></span></li>
+                    <li class="breadcrumb-item active" aria-current="page">Product Details</li>
                 </ol>
             </nav>
 
             <div class="row">
-                <div class="col-lg-9 main-content">
-                    <nav class="toolbox row">
-                        <div class="col-md-6">
-                            <div class="toolbox-left">
-                                <div class="toolbox-item">
-                                    <button class="btn btn-info btn-sm" id="btnRefresh" style="padding: 7px 11px !important" onclick="refreshData()" title="Refresh">
-                                        <i class="fa fa-sync"></i>&nbsp; Refresh
-                                    </button>
-                                    <!--<button class="btn btn-danger btn-sm" onclick="showQuickBuy()">Open</button>-->
-                                </div><!-- End .layout-modes -->
-                            </div><!-- End .toolbox-left -->
-                        </div>
-                        <div class="col-md-4">
-                            <div class="toolbox-right row">
-                                <div class="toolbox-item toolbox-show col-md-12">
-                                    <input type="text" id="txtSearch" class="form-input col-md-12" style="height:34px" placeholder="Search Anything..." />
-                                </div><!-- End .toolbox-item -->
+                <div class="col-lg-12 main-content">
+                    <div class="product-single-container product-single-default">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 product-single-gallery">
+                                <div class="product-slider-container">
+                                    <div class="">
+                                        <div class="product-item">
+                                            <img id="productDetailImage" class="img-responsive" />
+                                        </div>
+                                        <!-- End .product-single-carousel -->
+                                    </div>
+                                </div>
 
-                            </div><!-- End .toolbox-right -->
-                        </div>
+                            </div><!-- End .col-lg-7 -->
 
-                    </nav>
-                    <hr style="margin: 2rem auto 2.5rem !important" />
-                    <div class="row" id="productBlock">
-                        <!-- Products will be loaded here-->
-                    </div><!-- End .row -->
+                            <div class="col-lg-8 col-md-8">
+                                <div class="product-single-details">
+                                    <h1 class="product-title" id="productDetailProductName"> </h1>
+                                    <input type="hidden" id="hdnProductID" />
+                                    <hr class="short-divider">
+
+                                    <div class="product-desc">
+                                        <p id="productDetailProductDescription"></p>
+                                    </div><!-- End .product-desc -->
+                                    <!--<hr class="divider" id="colorFilterDivider">-->
+                                    <div class="product-filters-container">
+                                        <hr class="divider">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <button type="button" onclick="addRow()" id="btnAddRow" class="btn btn-info btn-sm">
+                                                            <i class="fa fa-plus"></i> ADD
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                                <br />
+
+                                                <table id="tableOne" class="table table-bordered table-responsive-stack">
+                                                    <thead id="tblVariantsHeader">
+                                                    </thead>
+                                                    <tbody id="tblVariantsBody">
+                                                    </tbody>
+                                                </table>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="txtProductComments">Enter comments (if any)</label>
+                                                        <textarea id="txtProductComments" rows="1" maxlength="100" class="form-control">  </textarea>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="btn-group">
+                                                            <button type="button" onclick="addToCart()" class="btn col-xs-12 btn-dark add-cart icon-shopping-cart">Save to Cart</button>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn col-sm-12 btn-dark add-cart cart-btn" data-toggle="dropdown">
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    <li style="padding: 10px; min-width: 160px"><a class="icon-shopping-cart" onclick="addToCart('true')" style="color: black; font-size: 1.4rem; font-weight: 700; font-size: 14px;" href="javascript:">&nbsp;Add & Finalize</a></li>
+                                                                </ul>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- End .product-action -->
+                                        <br />
+                                        <div id="validationMsg" style="display:none"> </div>
+
+                                    </div><!-- End .product-filters-container -->
+                                </div><!-- End .product-single-details -->
+                            </div><!-- End .col-lg-5 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .product-single-container -->
+
                 </div><!-- End .col-lg-9 -->
+            </div>
 
-                <div class="sidebar-overlay"></div>
-
-                <aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
-                    <div class="sidebar-wrapper">
-                        <div class="widget">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
-                            </h3>
-
-                            <div class="collapse show" id="widget-body-2">
-                                <div class="widget-body">
-                                    <ul class="cat-list" id="sidebarCat">
-                                    </ul>
-                                </div><!-- End .widget-body -->
-                            </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
-                    </div><!-- End .sidebar-wrapper -->
-                </aside><!-- End .col-lg-3 -->
-            </div><!-- End .row -->
         </div><!-- End .container -->
 
         <div class="mb-3"></div><!-- margin -->
@@ -458,13 +469,14 @@
         </div><!-- End .row -->
         </div><!-- End .container -->
         </div><!-- End .footer-middle -->
+
         <div class="container">
             <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
                 <div class="col-xs 6">
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.27</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.26</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>
@@ -497,88 +509,6 @@
 
         </div><!-- End .mobile-menu-wrapper -->
     </div><!-- End .mobile-menu-container -->
-    <div id="quickBuyViewPopup">
-        <div class="downupPopup-content" style="width:100%; height:70vh; overflow-y:scroll; overflow-x:unset">
-            <!--<iframe id="quickBuyView" src="productdetailstray.html" frameBorder="0" style="width:100%; min-height:70vh;">
-            </iframe>-->
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 main-content">
-                        <div class="product-single-container product-single-default">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="product-single-details">
-                                        <h1 class="product-title" id="productDetailProductName"> </h1>
-                                        <input type="hidden" id="hdnProductID" />
-                                        <div class="product-filters-container">
-                                            <hr class="divider">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-
-                                                        </div>
-                                                        <div class="col-md-6 text-right">
-                                                            <button type="button" onclick="addRow()" id="btnAddRow" class="btn btn-info btn-sm">
-                                                                <i class="fa fa-plus"></i> ADD
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-                                                    <br />
-
-                                                    <table id="tableOne" class="table table-bordered table-responsive-stack">
-                                                        <thead id="tblVariantsHeader">
-                                                        </thead>
-                                                        <tbody id="tblVariantsBody">
-                                                        </tbody>
-                                                    </table>
-                                                    <br />
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label for="txtProductComments">Enter comments (if any)</label>
-                                                            <textarea id="txtProductComments" rows="1" maxlength="100" class="form-control">  </textarea>
-                                                        </div>
-                                                    </div>
-                                                    <br />
-                                                    <div class="row">
-                                                        <div class="col-md-12 text-center">
-                                                            <div class="btn-group">
-                                                                <button type="button" onclick="addToCart('iframe-false')" class="btn col-xs-12 btn-dark add-cart icon-shopping-cart">Save to Cart</button>
-                                                                <div class="btn-group">
-                                                                    <button type="button" class="btn col-sm-12 btn-dark add-cart cart-btn" data-toggle="dropdown">
-                                                                    </button>
-                                                                    <ul class="dropdown-menu" role="menu">
-                                                                        <li style="padding: 10px; min-width: 160px"><a class="icon-shopping-cart" onclick="addToCart('true')" style="color: black; font-size: 1.4rem; font-weight: 700; font-size: 14px;" href="javascript:">&nbsp;Add & Finalize</a></li>
-                                                                    </ul>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                            <!-- End .product-action -->
-                                            <br />
-                                            <div id="validationMsg" style="display:none"> </div>
-
-                                        </div><!-- End .product-filters-container -->
-                                    </div><!-- End .product-single-details -->
-                                </div><!-- End .col-lg-5 -->
-                            </div><!-- End .row -->
-                        </div><!-- End .product-single-container -->
-
-                    </div><!-- End .col-lg-9 -->
-                </div>
-
-            </div><!-- End .container -->
-
-        </div>
-    </div>
 
     <div class="modal fade" id="confirmDelete" role="dialog" style="background-color:rgba(0,0,0,0.7)">
         <div class="modal-dialog delete-modal-sm">
@@ -612,9 +542,7 @@
     <!-- Main JS File -->
     <script src="assets/js/main.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/products.js"></script>
-    <script src="assets/downupPopup/downupPopup.js"></script>
+    <script src="js/productdetails.js"></script>
     <script src="assets/js/select2.min.js"></script>
-
 </body>
 </html>
