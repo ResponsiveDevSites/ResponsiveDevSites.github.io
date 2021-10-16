@@ -77,7 +77,7 @@ function loadProductDetails() {
             return (obj[0] === productID)
         });
 
-        $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3]);
+        $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3] + '/1.jpg');
         $('#productDetailProductName').html(product[0][2]);
         $('#productDetailProductDescription').html(product[0][4]);
 
@@ -489,6 +489,11 @@ function formatOptions(option) {
 
     return $option;
 };
+
+function navigateToProductGallery() {
+    sessionStorage.setItem("productGalleryProductID", $('#hdnProductID').val());
+    window.location.href = "productgallery.html";
+}
 
 /*on color selection, this is to show selected color box after the dropdown in grid*/
 $(document).on('select2:select', '.custom-ddl-color', function (e) {

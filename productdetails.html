@@ -83,7 +83,11 @@
         #txtProductComments {
             max-width: none !important;
             min-height: auto !important;
-            padding: 1.5rem !important;
+            padding: 7px !important;
+        }
+
+        #productDetailImage {
+            cursor: pointer;
         }
     </style>
 
@@ -153,6 +157,8 @@
             font-size: 12px;
             line-height: 2.5;
         }
+
+         
         /* Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
             .delete-modal-sm {
@@ -317,7 +323,21 @@
                                 <div class="product-slider-container">
                                     <div class="">
                                         <div class="product-item">
+
                                             <img id="productDetailImage" class="img-responsive" />
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="javascript:" onclick="navigateToProductGallery()" class="btn btn-info btn-xs" title="view">
+                                                        More Images
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                         <!-- End .product-single-carousel -->
                                     </div>
@@ -476,7 +496,7 @@
                     <p class="footer-copyright py-3 pr-4 mb-0">© Company. 2021. All Rights Reserved</p>
                 </div>
                 <div class="col-xs 6 text-right">
-                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.27</p>
+                    <p class="footer-copyright py-3 pr-4 mb-0">v 1.28</p>
                     <a href="#userAgent" data-toggle="collapse" onclick="getUserAgent()">User Agent</a>
                     <div id="userAgent" class="collapse">
                     </div>

@@ -80,7 +80,7 @@ function loadProducts(products) {
     $('#breadcrumb-selected-category').html(selectedCategory);
     var productBlock = '';
     for (var i = 0; i < products.length; i++) {
-        productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img src="ProductImages/' + products[i][3] + '"></a><div class="btn-icon-group"><button class="btn-icon-buy btn btn-info" id="btnQuickBuy" onclick="showQuickBuy(\'' + products[i][1] + '\')" >Buy</button></div> </figure><div class="product-details"><div class="category-wrap">  <div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div> </div><h3 class="product-title"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')" href="javascript:">' + products[i][2] + '</a></h3> </div>  </div></div>';
+        productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img style="height:245px" src="ProductImages/' + products[i][3] + '/1.jpg"></a><div class="btn-icon-group"><button class="btn-icon-buy btn btn-info" id="btnQuickBuy" onclick="showQuickBuy(\'' + products[i][1] + '\')" >Buy</button></div> </figure><div class="product-details"><div class="category-wrap">  <div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div> </div><h3 class="product-title"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')" href="javascript:">' + products[i][2] + '</a></h3> </div>  </div></div>';
     }
     $('#productBlock').html(productBlock);
 }
