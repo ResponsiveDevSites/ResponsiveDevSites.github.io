@@ -1,4 +1,6 @@
 var variantCollection = [];
+var slideIndex = 1;
+var productImageBasePath = "https://responsivedevsites.github.io";
 
 $(document).ready(function () {
 
@@ -32,11 +34,58 @@ function loadProductGallery() {
     var productThumbnailBlock = '';
 
     for (var i = 1; i < 11; i++) {
-        productImageBlock += '<div class="product-item"><img onerror="this.style.display=\'none\'" class="product-single-image" src="ProductImages/' + product[0][3] + '/' + i + '.jpg" data-zoom-image="ProductImages/' + product[0][3] + '/' + i + '.jpg" /> </div>';
-        productThumbnailBlock += '<div class="owl-dot"><img onerror="this.style.display=\'none\'" src="ProductImages/' + product[0][3] + '/' + i + '.jpg" /></div>';
+
+        var url = productImageBasePath + '/ProductImages/' + product[0][3] + '/' + i + '.jpg';
+
+        if (urlExists(url) == 200) {
+            productImageBlock += '<div class="mySlides"><img src="ProductImages/' + product[0][3] + '/' + i + '.jpg" class="img-responsive img-thumbnail" style="width:100%"></div>';
+            productThumbnailBlock += '<div class="column"><img class="demo cursor" src="ProductImages/' + product[0][3] + '/' + i + '.jpg" style="width:100%" onclick="currentSlide(' + i + ')"></div>';
+        }
+        else {
+            break;
+        }
+
     }
-    $('#imgGalleryList').html(productImageBlock);
-    $('.thumbnail-img-list').html(productThumbnailBlock);
+    $('#slider-img-list').html(productImageBlock);
+    $('#thumbnail-list').html(productThumbnailBlock);
+
+    showSlides(slideIndex);
+}
+
+function urlExists(testUrl) {
+    var http = jQuery.ajax({
+        type: "HEAD",
+        url: testUrl,
+        async: false
+    })
+    return http.status;
+}
+
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("demo");
+    // var captionText = document.getElementById("caption");
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex - 1].style.display = "block";
+    dots[slideIndex - 1].className += " active";
+    //captionText.innerHTML = dots[slideIndex - 1].alt;
 }
 
 
