@@ -87,7 +87,6 @@ function loadProducts(products) {
 
 function showQuickBuy(productID) {
     variantCollection = [];
-    $('#txtProductComments').val('');
     $('#tblVariantsBody').html('');
     $('#tblVariantsHeader').html('');
     sessionStorage.setItem("selectedProductID", productID);
@@ -240,6 +239,7 @@ function loadProductDetails() {
 }
 
 function addRow() {
+    debugger;
     var rowIndex = $('#tblVariantsBody tr').length;
     var productID = $('#hdnProductID').val();
 

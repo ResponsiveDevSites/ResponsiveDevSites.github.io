@@ -2,110 +2,38 @@ var variantCollection = [];
 
 $(document).ready(function () {
 
-    $("#quickBuyViewPopup").downupPopup({
-        distance: 20,
-        width: "98%"
-    });
-
-    /* fetches categories and products from local storage,
-    if doesnt found, makes an ajax call and then loads Menu and products.*/
+    /* fetches categories, products and product details from local storage,
+   if doesnt found, makes an ajax call and then loads Menu and product details.*/
 
     categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
     productResult = JSON.parse(localStorage.getItem("productResult"));
-
+    productVariantsResult = JSON.parse(localStorage.getItem("productVariantsResult"));
     if (categoryResult == null || categoryResult == '') {
         getCategoriesAjax();
         categoryResult = JSON.parse(localStorage.getItem("categoryResult"));
         loadMenuCategories(categoryResult);
         loadSearchCategories(categoryResult);
-        loadProductsSideBarCategories(categoryResult);
         loadMobileViewMenuCat(categoryResult);
     }
     else {
         loadMenuCategories(categoryResult);
         loadSearchCategories(categoryResult);
-        loadProductsSideBarCategories(categoryResult);
         loadMobileViewMenuCat(categoryResult);
     }
     if (productResult == null || productResult == '') {
         getProductsAjax();
         productResult = JSON.parse(localStorage.getItem("productResult"));
-        loadProducts(productResult);
     }
-    else {
-        loadProducts(productResult);
-    }
-
     if (productVariantsResult == null || productVariantsResult == '') {
         getProductVariantsAjax();
         productVariantsResult = JSON.parse(localStorage.getItem("productVariantsResult"));
+    } else {
+        loadProductDetails();
     }
 
-    $("#txtSearch").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#productBlock .col-6").filter(function () {
-            $(this).toggle(
-                ($(this).find('.product-title a').text().toLowerCase().indexOf(value) > -1 ||
-                    $(this).find('.category-list a').text().toLowerCase().indexOf(value) > -1)
-            )
-        });
-    });
     updateCartCount();
+
 });
-
-function refreshData() {
-    getCategoriesAjax();
-    getProductsAjax();
-    getProductVariantsAjax();
-    window.location.href = "products.html";
-}
-function loadProductsSideBarCategories(categories) {
-    var sidebarCat = '<li><a href="javascript:" onclick="navigateToProducts(\'All\')" >All Categories</a></li>';
-    for (var i = 0; i < categories.length; i++) {
-        sidebarCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
-    }
-    $('#sidebarCat').html(sidebarCat);
-}
-function loadProducts(products) {
-
-    var selectedCategory = null;
-
-    selectedCategory = sessionStorage.getItem("selectedCategory");
-    if (selectedCategory != null && selectedCategory != '' && selectedCategory != "All") {
-
-        products = products.filter(function (obj) {
-            return (obj[0] === selectedCategory)
-        });
-    }
-    $('#breadcrumb-selected-category').html(selectedCategory);
-    var productBlock = '';
-    for (var i = 0; i < products.length; i++) {
-        productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure class="img-container-height"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img class="img-thumbnail img-aspect" src="ProductImages/' + products[i][3] + '/1.jpg"></a><div class="btn-icon-group"><button class="btn-icon-buy btn btn-info" id="btnQuickBuy" onclick="showQuickBuy(\'' + products[i][1] + '\')" >Buy</button></div> </figure><div class="product-details"><div class="category-wrap">  <div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div> </div><h3 class="product-title"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')" href="javascript:">' + products[i][2] + '</a></h3> </div>  </div></div>';
-    }
-    $('#productBlock').html(productBlock);
-}
-
-function showQuickBuy(productID) {
-    variantCollection = [];
-    $('#txtProductComments').val('');
-    $('#tblVariantsBody').html('');
-    $('#tblVariantsHeader').html('');
-    sessionStorage.setItem("selectedProductID", productID);
-    loadProductDetails();
-    $('#quickBuyViewPopup').downupPopup('open');
-
-}
-
-function navigateToProductDetails(productID) {
-    sessionStorage.setItem("selectedProductID", productID);
-    window.location.href = "productdetails.html";
-}
-
-
-/*quick add popup scripts*/
-
-
-
 
 /* function to load product details and add to cart grid */
 function loadProductDetails() {
@@ -149,7 +77,7 @@ function loadProductDetails() {
             return (obj[0] === productID)
         });
 
-        $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3]);
+        $('#productDetailImage').attr('src', 'ProductImages/' + product[0][3] + '/1.jpg');
         $('#productDetailProductName').html(product[0][2]);
         $('#productDetailProductDescription').html(product[0][4]);
 
@@ -240,6 +168,7 @@ function loadProductDetails() {
 }
 
 function addRow() {
+
     var rowIndex = $('#tblVariantsBody tr').length;
     var productID = $('#hdnProductID').val();
 
@@ -433,13 +362,8 @@ function addToCart(finalize) {
         /*finally stores cart in local storage*/
         localStorage.setItem("cart", JSON.stringify(cartObj));
 
-        /*if add and finalized button clicked, it redirects to review page*/
-
         if (finalize == 'true') {
             window.location.href = "review.html"
-        }
-        else {
-            $('#quickBuyViewPopup').downupPopup('close');
         }
         $('#validationMsg').removeClass('alert alert-danger');
         $('#validationMsg').addClass('alert alert-success');
@@ -566,6 +490,11 @@ function formatOptions(option) {
     return $option;
 };
 
+function navigateToProductGallery() {
+    sessionStorage.setItem("productGalleryProductID", $('#hdnProductID').val());
+    window.location.href = "productgallery.html";
+}
+
 /*on color selection, this is to show selected color box after the dropdown in grid*/
 $(document).on('select2:select', '.custom-ddl-color', function (e) {
     $(this).parent().find('#selectedColorSample').remove();
@@ -591,4 +520,3 @@ $(document).on('blur', '.qty-number', function () {
     }
 
 });
-

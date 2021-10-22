@@ -25,14 +25,79 @@
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
-
     </script>
+    <style>
+        .table-responsive-stack tr {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+
+        .table-responsive-stack td,
+        .table-responsive-stack th {
+            display: block;
+            /*
+        flex-grow | flex-shrink | flex-basis   */
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+        }
+
+        .table-responsive-stack .table-responsive-stack-thead {
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-responsive-stack tr {
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                display: block;
+            }
+
+                .table-responsive-stack tr .last-odd {
+                    border-bottom: 3px solid #08C;
+                }
+            /*  IE9 FIX   */
+            /*  .table-responsive-stack td {
+                float: left\9;
+                width: 100%;
+            }*/
+            /*  IE9 FIX   */
+            .table-responsive-stack td {
+                float: left;
+                width: 50%;
+            }
+
+                .table-responsive-stack td.last-odd {
+                    float: left;
+                    width: 100%;
+                }
+        }
+
+        #txtProductComments {
+            max-width: none !important;
+            min-height: auto !important;
+            padding: 7px !important;
+        }
+
+        #productDetailImage {
+            cursor: pointer;
+        }
+    </style>
+
 
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="assets/css/style.min.css">
     <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
     <style>
         .img-responsive {
             display: block !important;
@@ -43,6 +108,11 @@
         .inline-list li {
             display: inline;
             padding: 0px 5px;
+        }
+
+        .custom-control {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
         .cart-btn:after {
@@ -69,28 +139,26 @@
             height: auto;
         }
 
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 34px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border-radius: 0px;
+            height: 34px;
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                top: 5px;
+            }
+
         .btn-xs {
-            padding: 1px 10px;
-            font-size: 10px;
+            padding: 1px 13px;
+            font-size: 12px;
             line-height: 2.5;
         }
 
-        .btn-xs-edit {
-            padding: 1px 10px;
-            font-size: 10px;
-            line-height: 2.5;
-        }
-
-        .btn-xs-delete {
-            padding: 1px 11px;
-            font-size: 10.5px;
-            line-height: 2.4;
-            margin-top: 10px;
-        }
-
-        .list li a {
-            padding: 0.5rem 0 .5rem 2rem !important;
-        }
+         
         /* Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
             .delete-modal-sm {
@@ -134,12 +202,6 @@
             .delete-modal-sm {
                 width: 30%;
             }
-        }
-
-        #txtOrderComments {
-            max-width: none !important;
-            min-height: auto !important;
-            padding: 7px !important;
         }
     </style>
 
@@ -249,54 +311,113 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><span id="activeBreadCrumb">Review</span> </li>
+                    <li class="breadcrumb-item active" aria-current="page">Product Details</li>
                 </ol>
             </nav>
 
             <div class="row">
-                <div class="col-lg-8 main-content">
-                    <table class="table table-mini-cart">
-                        <tbody id="reviewCart">
-                            <tr><td>Loading...</td></tr>
-                        </tbody>
-                    </table>
+                <div class="col-lg-12 main-content">
+                    <div class="product-single-container product-single-default">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 product-single-gallery">
+                                <div class="product-slider-container">
+                                    <div class="">
+                                        <div class="product-item">
 
-                </div>
-                <div class="col-lg-4">
-                    <div class="cart-summary">
-                        <div id="divComments">
-                            <label for="txtOrderComments">Comments (if any)</label>
-                            <textarea id="txtOrderComments" rows="2" maxlength="255" class="form-control"> </textarea>
-                        </div>
-                        <div class="checkout-methods">
-                            <!--<a href="javascript:" onclick="submitOrder()" id="btnSubmitOrder" class="btn btn-block btn-sm btn-primary">Submit</a>-->
-                            <a href="javascript:" onclick="makeApiCall()" id="btnSubmitOrder" class="btn btn-block btn-sm btn-primary">Submit</a>
+                                            <img id="productDetailImage" class="img-responsive" />
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-3">
 
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div class="checkout-methods">
-                            <a href="products.html" id="btnContinueToProducts" class="btn btn-block btn-sm btn-primary">Continue to Products</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <a href="javascript:" id="btnShowCurrentCart" onclick="switchCart(false)" class="btn btn-sm btn-block btn-outline-secondary hide">Show Current Cart</a>
-                            <a href="javascript:" id="btnShowPreviousCart" onclick="switchCart(true)" class="btn btn-sm btn-block btn-outline-secondary">Show Previous Cart</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <a href="javascript:" id="btnClearPreviousCart" onclick="confirmClearCart('previous-cart')" class="btn btn-sm btn-block btn-outline-secondary hide">Clear Cart</a>
-                            <a href="javascript:" id="btnClearCurrentCart" onclick="confirmClearCart('current-cart')" class="btn btn-sm btn-block btn-outline-secondary">Clear Cart</a>
-                        </div><!-- End .checkout-methods -->
-                        <br />
-                        <div>
-                            <div class="alert alert-success hide" id="msg-container">
-                                <span id="msg"></span> <br />Redirecting to products in <span id="timeLeft">5</span> ...
-                            </div>
-                        </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="javascript:" onclick="navigateToProductGallery()" class="btn btn-info btn-xs" title="view">
+                                                        More Images
+                                                    </a>
+                                                </div>
 
-                    </div><!-- End .cart-summary -->
+                                            </div>
 
-                </div><!-- End .col-lg-4 -->
+                                        </div>
+                                        <!-- End .product-single-carousel -->
+                                    </div>
+                                </div>
+
+                            </div><!-- End .col-lg-7 -->
+
+                            <div class="col-lg-8 col-md-8">
+                                <div class="product-single-details">
+                                    <h1 class="product-title" id="productDetailProductName"> </h1>
+                                    <input type="hidden" id="hdnProductID" />
+                                    <hr class="short-divider">
+
+                                    <div class="product-desc">
+                                        <p id="productDetailProductDescription"></p>
+                                    </div><!-- End .product-desc -->
+                                    <!--<hr class="divider" id="colorFilterDivider">-->
+                                    <div class="product-filters-container">
+                                        <hr class="divider">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <button type="button" onclick="addRow()" id="btnAddRow" class="btn btn-info btn-sm">
+                                                            <i class="fa fa-plus"></i> ADD
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                                <br />
+
+                                                <table id="tableOne" class="table table-bordered table-responsive-stack">
+                                                    <thead id="tblVariantsHeader">
+                                                    </thead>
+                                                    <tbody id="tblVariantsBody">
+                                                    </tbody>
+                                                </table>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="txtProductComments">Enter comments (if any)</label>
+                                                        <textarea id="txtProductComments" rows="1" maxlength="100" class="form-control">  </textarea>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="btn-group">
+                                                            <button type="button" onclick="addToCart()" class="btn col-xs-12 btn-dark add-cart icon-shopping-cart">Save to Cart</button>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn col-sm-12 btn-dark add-cart cart-btn" data-toggle="dropdown">
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    <li style="padding: 10px; min-width: 160px"><a class="icon-shopping-cart" onclick="addToCart('true')" style="color: black; font-size: 1.4rem; font-weight: 700; font-size: 14px;" href="javascript:">&nbsp;Add & Finalize</a></li>
+                                                                </ul>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- End .product-action -->
+                                        <br />
+                                        <div id="validationMsg" style="display:none"> </div>
+
+                                    </div><!-- End .product-filters-container -->
+                                </div><!-- End .product-single-details -->
+                            </div><!-- End .col-lg-5 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .product-single-container -->
+
+                </div><!-- End .col-lg-9 -->
             </div>
 
         </div><!-- End .container -->
@@ -368,6 +489,7 @@
         </div><!-- End .row -->
         </div><!-- End .container -->
         </div><!-- End .footer-middle -->
+
         <div class="container">
             <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
                 <div class="col-xs 6">
@@ -418,7 +540,7 @@
                             <h6>Are you sure to delete?</h6>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs btn-danger" onclick="deleteCartRow()">Delete</button>
+                                    <button type="button" class="btn btn-xs btn-danger" onclick="removeRow()">Delete</button>
                                 </div>
                                 <div class="col-xs-6">
                                     <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
@@ -433,32 +555,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="confirmClearCart" role="dialog" style="background-color:rgba(0,0,0,0.7)">
-        <div class="modal-dialog delete-modal-sm">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row row-sparse">
-                        <div class="col-xs-12">
-                            <h6>Are you sure to clear cart?</h6>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs btn-danger" onclick="clearCart()">Clear</button>
-                                </div>
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-xs" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                            <input type="hidden" id="hdnCartTypeToDelete" />
-                        </div><!-- End .product-single-gallery -->
-                    </div><!-- End .row -->
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
     <!-- Plugins JS File -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -466,95 +562,7 @@
     <!-- Main JS File -->
     <script src="assets/js/main.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/review.js"></script>
-
-    <script>
-        function makeApiCall() {
-            debugger;
-            handleSignInClick();
-            var params = {
-                // The ID of the spreadsheet to update.
-                spreadsheetId: '1ydx9B9s00Jp_Q0PNjQOLERtUC-eAYm6S5_VKBDvBdwA',  // TODO: Update placeholder value.
-
-                // The A1 notation of a range to search for a logical table of data.
-                // Values will be appended after the last row of the table.
-                range: 'Orders!A1:F35',  // TODO: Update placeholder value.
-
-                // How the input data should be interpreted.
-                valueInputOption: 'RAW',  // TODO: Update placeholder value.
-
-                // How the input data should be inserted.
-                insertDataOption: 'INSERT_ROWS',  // TODO: Update placeholder value.
-            };
-
-            var valueRangeBody = {
-                "ProductID ": "2 ",
-                "CreatedDate ": "22-Oct-2021 ",
-                "CartRowIndex ": 0,
-                "ProductComment ": "Test 2 ",
-                "Quantity ": "30 ",
-                "cartItemVariant ": {
-                    "Color ": "#336699 ",
-                    "Thickness ": "T3 ",
-                    "RAM ": "RNP32 "
-                }
-            };
-
-            var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
-            request.then(function (response) {
-                // TODO: Change code below to process the `response` object:
-                console.log(response.result);
-            }, function (reason) {
-                console.error('error: ' + reason.result.error.message);
-            });
-        }
-
-        function initClient() {
-            var API_KEY = 'AIzaSyALYSx_H8_qXnLRJvuql7GzfTZ3MvlLdqI';  // TODO: Update placeholder with desired API key.
-
-            var CLIENT_ID = '503373203845-n215d142v7kkobsu6fhdp73m4fqfnpq3.apps.googleusercontent.com';  // TODO: Update placeholder with desired client ID.
-
-            // TODO: Authorize using one of the following scopes:
-            //   'https://www.googleapis.com/auth/drive'
-            //   'https://www.googleapis.com/auth/drive.file'
-            //   'https://www.googleapis.com/auth/spreadsheets'
-            var SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
-
-            gapi.client.init({
-                'apiKey': API_KEY,
-                'clientId': CLIENT_ID,
-                'scope': SCOPE,
-                'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-            }).then(function () {
-                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
-                updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-            });
-        }
-
-        function handleClientLoad() {
-            debugger;
-            gapi.load('client:auth2', initClient);
-        }
-
-        function updateSignInStatus(isSignedIn) {
-            if (isSignedIn) {
-                makeApiCall();
-            }
-        }
-
-        function handleSignInClick(event) {
-            gapi.auth2.getAuthInstance().signIn();
-        }
-
-        function handleSignOutClick(event) {
-            gapi.auth2.getAuthInstance().signOut();
-        }
-    </script>
-    <script async defer src="https://apis.google.com/js/api.js"
-            onload="this.onload=function(){};handleClientLoad()"
-            onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
-
-
+    <script src="js/productdetails.js"></script>
+    <script src="assets/js/select2.min.js"></script>
 </body>
 </html>
