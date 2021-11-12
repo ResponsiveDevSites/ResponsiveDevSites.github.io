@@ -30,6 +30,11 @@ $(document).ready(function () {
         loadFeaturedProducts(productResult);
     }
     updateCartCount();
+
+    if (screen.width <= 992) {
+        $('.mobile-menu-toggler').click();
+    }
+    
 });
 
 /*Loads featured products */
