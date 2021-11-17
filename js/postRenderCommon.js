@@ -1,16 +1,13 @@
 $(document).ready(function () {
     //regex to allow only alphanumeric characters
-    var regEx = "^[a-zA-Z0-9]+$";
 
-    $('.validate-chars').on('keypress', function (e) {
-        var regex = new RegExp(regEx);
-        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-        if (regex.test(str)) {
-            return true;
+    var regex = /[^a-zA-Z0-9 ]/g;
+    $('.validate-chars').on('keyup', function (e) {
+        var str = e.target.value;
+        if (str.match(regex) != null) {
+            $(str.match(regex)).each(function (index, val) { str = str.replace(val,''); })
         }
-
-        e.preventDefault();
-        return false;
+        e.target.value = str;
     });
 
 });
