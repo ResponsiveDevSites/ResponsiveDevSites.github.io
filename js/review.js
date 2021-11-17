@@ -35,6 +35,7 @@ $(document).ready(function () {
     else {
         loadReviewCart();
     }
+
     updateCartCount();
 });
 /*function to load review cart */
