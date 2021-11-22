@@ -471,29 +471,13 @@ function responsiveTable() {
     $('.table-responsive-stack').each(function (i) {
         var id = $(this).attr('id');
         //alert(id);
-        var totalHeaders = $(this).find("th").length;
         $(this).find("th").each(function (i) {
             $('#' + id + ' td:nth-child(' + (i + 1) + ')').find('.table-responsive-stack-thead').remove();
-            $('#' + id + ' td:nth-child(' + (i + 1) + ')').addClass((totalHeaders == (i + 1)) && i % 2 == 0 ? 'last-odd' : '');
-            //$('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span style="min-width: 35%; display:inline-block" class="table-responsive-stack-thead">' + $(this).text() + ':</span> ');
-            // $('.table-responsive-stack-thead').hide();
             if ($(this).text() != "Delete") {
-                if ($(this).text() == "Color") {
-                    $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 30%; display:inline-block">' + $(this).text() + ':</span> ');
-                }
-                else {
-                    $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
-                }
-
+                $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 38%; display:inline-block">' + $(this).text() + ':</span> ');
             }
+            $('.table-responsive-stack-thead').hide();
         });
-
-        //$(this).find("th").each(function (i) {
-        //    $('#' + id + ' td:nth-child(' + (i + 1) + ')').find('.table-responsive-stack-thead').remove();
-        //    if ($(this).text() != "Delete") {
-        //        $('#' + id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead" style="width: 40%; display:inline-block">' + $(this).text() + ':</span> ');
-        //    }
-        //});
     });
 
     $('.table-responsive-stack').each(function () {
@@ -537,14 +521,17 @@ function responsiveTable() {
     window.onresize = function (event) {
         flexTable();
     };
-    // document ready  
 
 }
+
 function initalizeSelect2() {
     $('.custom-ddl-color').select2({
-        templateResult: formatOptions
+        templateResult: formatOptions,
+        minimumResultsForSearch: -1
     });
-    $('.custom-ddl').select2();
+    $('.custom-ddl').select2({
+        minimumResultsForSearch: -1
+    });
 }
 /* select2 dropdown: to show customized options with color boxes in "color" dropdown */
 function formatOptions(option) {

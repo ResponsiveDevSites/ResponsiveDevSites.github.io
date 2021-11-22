@@ -1,3 +1,4 @@
+var appVersion = 'v 1.37';
 
 var sheetAPIBaseURL = "https://sheets.googleapis.com/v4/spreadsheets"
 var ExcelfileID = "1ydx9B9s00Jp_Q0PNjQOLERtUC-eAYm6S5_VKBDvBdwA";
@@ -202,4 +203,5 @@ $(document).ready(function () {
     });
 
     $('#headerTextCarousel').html(headerTextCarouselBlock);
+    $('.app-version').html(appVersion);
 });
