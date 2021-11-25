@@ -22,7 +22,7 @@ var readProductURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + productS
 /*Read products*/
 var productVariantsSheetName = "ProductVariants";
 var productVariantsFromRange = "A1";
-var productVariantsToRange = "F35";
+var productVariantsToRange = "F235";
 var readProductVariantsURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + productVariantsSheetName + "!" + productVariantsFromRange + ":" + productVariantsToRange + "?key=" + apiKey;
 /*Read products ends*/
 
