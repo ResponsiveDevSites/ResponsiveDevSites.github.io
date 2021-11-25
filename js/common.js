@@ -1,4 +1,9 @@
 var appVersion = 'v 1.37';
+var indexPageVersion = 'I37'
+var cataloguePageVersion = 'C37'
+var detailPageVersion = 'D37'
+var reviewPageVersion = 'R37'
+var galleryPageVersion = 'G37'
 
 var sheetAPIBaseURL = "https://sheets.googleapis.com/v4/spreadsheets"
 var ExcelfileID = "1ydx9B9s00Jp_Q0PNjQOLERtUC-eAYm6S5_VKBDvBdwA";
@@ -150,6 +155,7 @@ function getUserAgent() {
     txt += "<br>Resolution: " + Math.round(window.screen.width) + "x" + Math.round(window.screen.height);
     txt += "<br>Browser Online: " + navigator.onLine;
     $('#userAgent').html(txt);
+    $('#pageVersion').html('Page version: ' + indexPageVersion + '.' + cataloguePageVersion + '.' + detailPageVersion + '.' + galleryPageVersion + '.' + reviewPageVersion);
 }
 /* updates the count of cart to show on cart icon at top header */
 function updateCartCount() {
@@ -196,7 +202,7 @@ $(document).ready(function () {
         var from = new Date(d1[2], parseInt(d1[1]) - 1, d1[0]);  // -1 because months are from 0 to 11
         var to = new Date(d2[2], parseInt(d2[1]) - 1, d2[0]);
         var check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
-         
+
         if (check >= from && check <= to) {
             headerTextCarouselBlock += '<div class="top-notice bg-dark text-white"> <div class="container text-center"> <h5 class="d-inline-block mb-0 mr-2">' + obj[0] + ' </h5> </div>  </div>';
         }
