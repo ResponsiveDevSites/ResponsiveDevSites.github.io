@@ -1,9 +1,9 @@
-var appVersion = 'v 1.37';
-var indexPageVersion = 'I37'
-var cataloguePageVersion = 'C37'
-var detailPageVersion = 'D37'
-var reviewPageVersion = 'R37'
-var galleryPageVersion = 'G37'
+var appVersion = 'v 1.38';
+var indexPageVersion = 'I38'
+var cataloguePageVersion = 'C38'
+var detailPageVersion = 'D38'
+var reviewPageVersion = 'R38'
+var galleryPageVersion = 'G38'
 
 var sheetAPIBaseURL = "https://sheets.googleapis.com/v4/spreadsheets"
 var ExcelfileID = "1ydx9B9s00Jp_Q0PNjQOLERtUC-eAYm6S5_VKBDvBdwA";
@@ -20,7 +20,7 @@ var readCategoryURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + categor
 /*Read products*/
 var productSheetName = "Products";
 var productFromRange = "A1";
-var productToRange = "F60";
+var productToRange = "G60";
 var readProductURL = sheetAPIBaseURL + "/" + ExcelfileID + "/values/" + productSheetName + "!" + productFromRange + ":" + productToRange + "?key=" + apiKey;
 /*Read products ends*/
 
