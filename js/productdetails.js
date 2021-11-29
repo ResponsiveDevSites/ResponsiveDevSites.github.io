@@ -35,6 +35,8 @@ $(document).ready(function () {
 
 });
 
+
+
 /* function to load product details and add to cart grid */
 function loadProductDetails() {
 
@@ -109,6 +111,7 @@ function loadProductDetails() {
         else {
             variantTableHeaderBlock += '<th class="">Quantity</th></tr>';
             $('#btnAddRow').addClass('hide');
+            $('#btnAddAllRow').addClass('hide');
         }
 
 
@@ -167,6 +170,67 @@ function loadProductDetails() {
     }
 }
 
+function generateUniqueCombinations(args) {
+    var r = [], max = args.length - 1;
+    function helper(arr, i) {
+        for (var j = 0, l = args[i].length; j < l; j++) {
+            var a = arr.slice(0); // clone arr
+            a.push(args[i][j]);
+            if (i == max)
+                r.push(a);
+            else
+                helper(a, i + 1);
+        }
+    }
+    helper([], 0);
+    return r;
+
+}
+
+function addAllRow() {
+
+    $('#tblVariantsBody').html('');
+    var productID = $('#hdnProductID').val();
+    var productDetails = productVariantsResult.filter(function (obj) {
+        return (obj[0] === productID)
+    });
+
+    var arrayVariants = [];
+
+    variantCollection.filter(function (variant) {
+        var code = [];
+        $(productDetails).each(function (inx, objs) {
+            if (variant == objs[3]) {
+                code.push(objs[2]);
+            }
+        })
+        arrayVariants.push(code);
+        tmpCount = 0;
+    })
+    if (arrayVariants.length > 0) {
+
+        var combinations = generateUniqueCombinations(arrayVariants);
+
+        for (var i = 0; i < combinations.length; i++) {
+            addRow();
+            var currentComb = combinations[i];
+            var trow = $('#tblVariantsBody tr:last');
+            $(trow).find('td[data-variant="quantity"]').find('input').val(100);
+            $(trow).find('td').each(function (ind, obj) {
+                $(obj).find('select').val(currentComb[ind]);
+            });
+        }
+
+        initalizeSelect2(); //after creating rows, initialize select2 customized dropdown
+        responsiveTable(); // intialize responsive table
+        //triggers select event of select2 dropdown, that will show selected color box after dropdown.
+        $('.custom-ddl-color').trigger({
+            type: 'select2:select'
+        });
+    }
+
+}
+
 function addRow() {
 
     var rowIndex = $('#tblVariantsBody tr').length;
@@ -209,7 +273,7 @@ function addRow() {
     });
 
     /*if variants are exists products, it will create quantity textbox and delete row button,
-     * els if variants dont exists, it will create only quantity text box since. there is no point to generate delete button here 
+     * else if variants dont exists, it will create only quantity text box since there is no point to generate delete button here 
      */
     if (variantCollection.length > 0) {
         variantTableTrBlock += '<td class="" data-variant="quantity"><input type="number" class="form-input qty-number" style="height:34px;" placeholder="Quantity"></td><td class="text-center"><button data-rowindex="' + (rowIndex + 1) + '" type="button" class="btn btn-danger btn-xs removeRow"><i class="fa fa-trash"></i></button> </td></tr>';
