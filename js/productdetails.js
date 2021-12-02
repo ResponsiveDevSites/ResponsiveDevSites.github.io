@@ -231,6 +231,13 @@ function addAllRow() {
 
 }
 
+function addVariantRow() {
+    addRow();
+    $('html,body').animate({
+        scrollTop: eval($("#tblVariantsBody tr:last").offset().top - 100)
+    }, 'slow');
+}
+
 function addRow() {
 
     var rowIndex = $('#tblVariantsBody tr').length;

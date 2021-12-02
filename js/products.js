@@ -302,6 +302,13 @@ function addAllRow() {
 
 }
 
+function addVariantRow() {
+    addRow();
+    $('#quickbuy-popup-content').animate({
+        scrollTop: eval($("#tblVariantsHeader tr:last").offset().top - 100)
+    }, 'slow');
+}
+
 function addRow() {
     var rowIndex = $('#tblVariantsBody tr').length;
     var productID = $('#hdnProductID').val();

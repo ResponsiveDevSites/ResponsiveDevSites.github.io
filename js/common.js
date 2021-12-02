@@ -1,7 +1,7 @@
-var appVersion = 'v 1.39';
+var appVersion = 'v 1.40';
 var indexPageVersion = 'I38' // index page
-var cataloguePageVersion = 'C39' // catalogue page
-var detailPageVersion = 'D39' // product details (variant selection page)
+var cataloguePageVersion = 'C40' // catalogue page
+var detailPageVersion = 'D40' // product details (variant selection page)
 var reviewPageVersion = 'R38' // cart review page
 var galleryPageVersion = 'G38' // product gallery
 
