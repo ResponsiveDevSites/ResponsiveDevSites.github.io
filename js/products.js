@@ -258,8 +258,21 @@ function generateUniqueCombinations(args) {
 
 }
 
+function addAllVariantRow() {
+    addAllRow();
+    var rowpos = $('#tblVariantsBody tr:last').position();
+    $('#quickbuy-popup-content').animate({
+        scrollTop: rowpos.top
+    }, 'slow');
+}
+
 function addAllRow() {
 
+    var firstRowQty = $('#tblVariantsBody tr:first').find('td[data-variant=quantity]').find('input').val();
+
+    if (firstRowQty == '' || firstRowQty == null) {
+        firstRowQty = 100;
+    }
     $('#tblVariantsBody').html('');
     var productID = $('#hdnProductID').val();
     var productDetails = productVariantsResult.filter(function (obj) {
@@ -286,7 +299,7 @@ function addAllRow() {
             addRow();
             var currentComb = combinations[i];
             var trow = $('#tblVariantsBody tr:last');
-            $(trow).find('td[data-variant="quantity"]').find('input').val(100);
+            $(trow).find('td[data-variant="quantity"]').find('input').val(firstRowQty);
             $(trow).find('td').each(function (ind, obj) {
                 $(obj).find('select').val(currentComb[ind]);
             });
@@ -304,8 +317,9 @@ function addAllRow() {
 
 function addVariantRow() {
     addRow();
+    var rowpos = $('#tblVariantsBody tr:last').position();
     $('#quickbuy-popup-content').animate({
-        scrollTop: eval($("#tblVariantsHeader tr:last").offset().top - 100)
+        scrollTop: rowpos.top
     }, 'slow');
 }
 
