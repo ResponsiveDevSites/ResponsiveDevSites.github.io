@@ -190,9 +190,8 @@ function generateUniqueCombinations(args) {
 
 function addAllVariantRow() {
     addAllRow();
-    var rowpos = $('#tblVariantsBody tr:last').position();
     $('html,body').animate({
-        scrollTop: rowpos.top
+        scrollTop: eval($("#tblVariantsBody tr:last").offset().top - 100)
     }, 'slow');
 }
 
@@ -251,9 +250,8 @@ function addAllRow() {
 
 function addVariantRow() {
     addRow();
-    var rowpos = $('#tblVariantsBody tr:last').position();
     $('html,body').animate({
-        scrollTop: rowpos.top
+        scrollTop: eval($("#tblVariantsBody tr:last").offset().top - 100)
     }, 'slow');
 }
 
