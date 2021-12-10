@@ -1,8 +1,8 @@
-var appVersion = 'v 1.41';
-var indexPageVersion = 'I38' // index page
-var cataloguePageVersion = 'C41' // catalogue page
-var detailPageVersion = 'D41' // product details (variant selection page)
-var reviewPageVersion = 'R38' // cart review page
+var appVersion = 'v 1.42';
+var indexPageVersion = 'I39' // index page
+var cataloguePageVersion = 'C42' // catalogue page
+var detailPageVersion = 'D42' // product details (variant selection page)
+var reviewPageVersion = 'R39' // cart review page
 var galleryPageVersion = 'G38' // product gallery
 
 var sheetAPIBaseURL = "https://sheets.googleapis.com/v4/spreadsheets"
@@ -146,6 +146,18 @@ function loadMobileViewMenuCat(categories) {
         var encodedURL = encodeURIComponent(categories[i]);
         mobileViewMenuCat += '<li><a href="javascript:" onclick="navigateToProducts(\'' + categories[i] + '\')">' + categories[i] + '</a></li>';
         $('#mobileViewMenuCat').html(mobileViewMenuCat);
+    }
+}
+
+/*Global search*/
+function globalSearch() {
+    if ($('#txtGlobalSearch').val().length < 3) {
+
+    }
+    else {
+        $('#txtGlobalSearch').val();
+        navigateToProducts($('#searchCat').val());
+        sessionStorage.setItem('globalSearchText', $('#txtGlobalSearch').val())
     }
 }
 

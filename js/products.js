@@ -2,6 +2,23 @@ var variantCollection = [];
 
 $(document).ready(function () {
 
+    $("#txtSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#productBlock .col-6").filter(function () {
+            $(this).toggle(
+                ($(this).find('.product-title a').text().toLowerCase().indexOf(value) > -1 ||
+                    $(this).find('.category-list a').text().toLowerCase().indexOf(value) > -1)
+            )
+        });
+        if ($("#productBlock .col-6:visible").length == 0) {
+            $('#noProductMsg').removeClass('hide');
+            $('#totalProducts').html('');
+        } else {
+            $('#noProductMsg').addClass('hide');
+            $('#totalProducts').html('(' + $("#productBlock .col-6:visible").length + ')');
+        }
+    });
+
     $("#quickBuyViewPopup").downupPopup({
         distance: 20,
         width: "98%"
@@ -41,17 +58,11 @@ $(document).ready(function () {
         productVariantsResult = JSON.parse(localStorage.getItem("productVariantsResult"));
     }
 
-    $("#txtSearch").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#productBlock .col-6").filter(function () {
-            $(this).toggle(
-                ($(this).find('.product-title a').text().toLowerCase().indexOf(value) > -1 ||
-                    $(this).find('.category-list a').text().toLowerCase().indexOf(value) > -1)
-            )
-        });
-    });
+
 
     updateCartCount();
+    //Showing total products in breadcrumb
+    $('#totalProducts').html('(' + $("#productBlock .col-6:visible").length + ')');
 });
 
 function refreshData() {
@@ -67,6 +78,7 @@ function loadProductsSideBarCategories(categories) {
     }
     $('#sidebarCat').html(sidebarCat);
 }
+
 function loadProducts(products) {
 
     var selectedCategory = null;
@@ -84,6 +96,14 @@ function loadProducts(products) {
         productBlock += '<div class="col-6 col-sm-4"><div class="product-default inner-quickview inner-icon"><figure class="img-container-height"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')\" href="javascript:"><img class="img-thumbnail img-aspect" src="ProductImages/' + products[i][3] + '/1.jpg"></a><div class="btn-icon-group"><button class="btn-icon-buy btn btn-info" id="btnQuickBuy" onclick="showQuickBuy(\'' + products[i][1] + '\')" >Buy</button></div> </figure><div class="product-details"><div class="category-wrap">  <div class="category-list"><a href="javascript:" class="product-category">' + products[i][0] + '</a></div> </div><h3 class="product-title"><a onclick="navigateToProductDetails(\'' + products[i][1] + '\')" href="javascript:">' + products[i][2] + '</a></h3> </div>  </div></div>';
     }
     $('#productBlock').html(productBlock);
+
+    var searchText = sessionStorage.getItem('globalSearchText');
+
+    if (searchText != null && searchText != '') {
+        $("#txtSearch").val(searchText);
+        $("#txtSearch").keyup();
+        sessionStorage.removeItem('globalSearchText');
+    }
 }
 
 function showQuickBuy(productID) {
@@ -102,10 +122,10 @@ function navigateToProductDetails(productID) {
     window.location.href = "productdetails.html";
 }
 
+function globalSearch() {
 
+}
 /*quick add popup scripts*/
-
-
 
 
 /* function to load product details and add to cart grid */
